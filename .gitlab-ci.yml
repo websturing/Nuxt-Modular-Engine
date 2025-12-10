@@ -1,0 +1,24 @@
+# ==========================
+#   🔁 MIRROR TO GITHUB
+# ==========================
+mirror_to_github:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+    - git config --global user.email "kaigrammm@gmail.com"
+    - git config --global user.name "Mirror Bot"
+  script:
+    - git fetch --unshallow || true
+    - git fetch origin "+refs/heads/*:refs/heads/*" --prune
+    - git fetch origin "+refs/tags/*:refs/tags/*" --prune
+    - git remote rm github || true
+    - git remote add github https://${GITHUB_TOKEN}@github.com/websturing/Nuxt-Modular-Engine.git
+    # Push ini sekarang akan berhasil karena GITHUB_TOKEN memiliki cakupan 'workflow'
+    - git push github --all --prune
+    - git push github --tags --prune
+  only:
+    - branches
+    - tags
+
+
