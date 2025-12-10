@@ -1,12 +1,13 @@
-<script setup lang="ts">
-/**
- * Root App Component
- * Entry point aplikasi dengan NuxtPage untuk routing
- */
-</script>
-
 <template>
   <div>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
+
+<script setup>
+// Anda juga dapat langsung menggunakan <NuxtPage /> di app.vue,
+// dan Nuxt akan secara otomatis mengelola <NuxtLayout> di baliknya.
+// Namun, menggunakan <NuxtLayout> secara eksplisit lebih aman.
+</script>

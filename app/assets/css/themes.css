@@ -1,0 +1,31 @@
+/* assets/styles/themes.css */
+
+/* Definisikan warna dasar untuk Light/Dark Mode */
+:root {
+  --color-text-main: #333;
+  --color-bg-main: #fff;
+}
+.dark {
+  --color-text-main: #fff;
+  --color-bg-main: #1f2937; /* Gray-800 */
+}
+
+/* Definisikan warna aksen berdasarkan class di <html> */
+.accent-blue {
+  --color-accent: #3b82f6; /* Blue-500 */
+}
+.accent-red {
+  --color-accent: #ef4444; /* Red-500 */
+}
+/* ... aksen lain ... */
+
+/* Gunakan variabel ini di seluruh komponen */
+.sidebar {
+  background-color: var(--color-accent); /* Sidebar menggunakan warna aksen */
+  color: white;
+}
+
+.main-content {
+  background-color: var(--color-bg-main); /* Main content mengikuti Light/Dark Mode */
+  color: var(--color-text-main);
+}

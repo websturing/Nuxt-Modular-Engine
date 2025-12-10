@@ -1,0 +1,85 @@
+/* =========================================
+   LAYER 1: PRIMITIVES (THE RAW PALETTE)
+   Hanya definisi warna, jangan digunakan langsung di UI.
+   ========================================= */
+:root {
+  /* Brand Primitives - Professional Blue */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6; /* Base Brand Color */
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+
+  /* Neutral Primitives - Slate (Cool Grey for modern look) */
+  --neutral-0: #ffffff;
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+
+  /* Functional Primitives */
+  --danger-500: #ef4444;
+  --success-500: #22c55e;
+  --warning-500: #eab308;
+}
+
+/* =========================================
+   LAYER 2: STRATEGIC TOKENS (SEMANTICS)
+   Gunakan variabel ini di dalam komponen Anda.
+   ========================================= */
+:root {
+  /* --- Backgrounds --- */
+  --bg-page: var(--neutral-50);      /* Warna latar belakang utama halaman */
+  --bg-surface: var(--neutral-0);    /* Warna latar belakang kartu/kontainer */
+  --bg-sidebar: var(--neutral-900);  /* Dark sidebar specific */
+  --bg-header: var(--neutral-0);
+
+  /* --- Text / Foregrounds --- */
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-500);
+  --text-inverted: var(--neutral-0); /* Teks di atas background gelap */
+  --text-brand: var(--brand-600);
+
+  /* --- Borders / Dividers --- */
+  --border-subtle: var(--neutral-100);
+  --border-main: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+
+  /* --- Interactive Elements (Buttons, Links) --- */
+  --action-primary: var(--brand-600);
+  --action-primary-hover: var(--brand-700);
+  --action-danger: var(--danger-500);
+}
+
+/* =========================================
+   OPTIONAL: DARK MODE OVERRIDES
+   Otomatis berubah jika OS user pakai Dark Mode
+   ========================================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Re-map Semantics to Dark Primitives */
+    --bg-page: var(--neutral-900);
+    --bg-surface: var(--neutral-800);
+    --bg-sidebar: var(--neutral-950); /* Even darker for sidebar */
+    --bg-header: var(--neutral-900);
+    
+    --text-primary: var(--neutral-50);
+    --text-secondary: var(--neutral-400);
+    --text-inverted: var(--neutral-0);
+    
+    --border-subtle: var(--neutral-800);
+    --border-main: var(--neutral-700);
+    --border-strong: var(--neutral-600);
+  }
+}

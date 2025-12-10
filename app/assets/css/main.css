@@ -34,3 +34,14 @@ html {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* 
+  Global fix for @vicons / UiIcon flckering/sizing issues.
+  Ensures SVGs inside the icon wrapper never exceed the wrapper size.
+  See: app/components/ui/Icon/UiIcon.vue
+*/
+.ui-icon svg {
+  height: 1em !important;
+  width: 1em !important;
+  fill: currentColor;
+}

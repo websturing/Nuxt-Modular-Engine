@@ -16,7 +16,8 @@ export default defineNuxtConfig({
   // 🎨 CSS & STYLING
   // ========================================
   css: [
-    '~/assets/css/main.css'  // Global CSS file
+    '~/assets/css/variables.css', // 1. Design Tokens (Primitives & Semantics)
+    '~/assets/css/main.css'       // 2. Global Styles
   ],
 
   tailwindcss: {
