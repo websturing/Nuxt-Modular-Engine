@@ -1,59 +1,60 @@
-// composables/useTheme.js
+export type ThemeName = 'blue' | 'emerald' | 'indigo';
 
-import { computed, ref } from 'vue';
+interface ThemeDefinition {
+    name: string;
+    label: string;
+}
 
-// Definisikan pilihan tema yang tersedia (misalnya nama kelas Tailwind)
-const availableThemes: any = {
-    blue: {
-        sidebarBg: 'bg-gray-700', // Warna latar belakang sidebar
-        sidebarText: '!text-white', // Warna teks
-        activeBg: 'bg-blue-200', // Warna latar belakang menu aktif
-    },
-    emerald: {
-        sidebarBg: 'bg-emerald-600',
-        sidebarText: 'text-white',
-        activeBg: 'bg-emerald-700',
-    },
-    // Anda bisa tambahkan tema lain seperti 'indigo', 'gray', dll.
-};
+const availableThemes: ThemeDefinition[] = [
+    { name: 'blue', label: 'Professional Blue' },
+    { name: 'emerald', label: 'Emerald Green' },
+    { name: 'indigo', label: 'Indigo Purple' },
+];
 
-// State yang akan menyimpan tema yang sedang aktif
-// Gunakan ref untuk membuatnya reaktif.
-const currentThemeName = ref('blue'); // Default theme
+export const useTheme = () => {
+    // State
+    const currentTheme = useState<ThemeName>('theme-color', () => 'indigo');
 
-/**
- * Composable untuk mengelola tema aplikasi.
- */
-export function useTheme() {
+    /**
+     * Apply theme to <html> tag using useHead
+     * This handles both SSR and Client-side hydration
+     */
+    useHead({
+        htmlAttrs: {
+            'data-theme': computed(() => currentTheme.value)
+        }
+    });
 
-    // Fungsi untuk mengubah tema
-    const setTheme = (themeName: any) => {
-        if (availableThemes[themeName]) {
-            currentThemeName.value = themeName;
-            // Opsional: Simpan ke LocalStorage agar pilihan tetap tersimpan
-            if (process.client) {
-                localStorage.setItem('sidebarTheme', themeName);
+    /**
+     * Set active theme and save to preference
+     */
+    const setTheme = (theme: ThemeName) => {
+        if (!availableThemes.find(t => t.name === theme)) return;
+
+        currentTheme.value = theme;
+
+        if (import.meta.client) {
+            localStorage.setItem('user-theme', theme);
+        }
+    };
+
+    /**
+     * Initialize theme from local storage
+     * (Run this once on app mount)
+     */
+    const initTheme = () => {
+        if (import.meta.client) {
+            const savedTheme = localStorage.getItem('user-theme') as ThemeName;
+            if (savedTheme && availableThemes.find(t => t.name === savedTheme)) {
+                currentTheme.value = savedTheme;
             }
         }
     };
 
-    // Hitung objek tema saat ini (reactive getter)
-    const themeClasses = computed(() => {
-        return availableThemes[currentThemeName.value];
-    });
-
-    // Ambil tema dari LocalStorage saat pertama kali load
-    if (process.client) {
-        const savedTheme = localStorage.getItem('sidebarTheme');
-        if (savedTheme && availableThemes[savedTheme]) {
-            currentThemeName.value = savedTheme;
-        }
-    }
-
     return {
-        currentThemeName,
-        themeClasses,
+        currentTheme,
         availableThemes,
         setTheme,
+        initTheme
     };
-}
+};

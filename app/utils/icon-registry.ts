@@ -1,38 +1,29 @@
 
-// Import all icon sets (Note: This forces bundling of all icons, which may affect bundle size)
-// To optimize, you might want to only import specific sets or icons you need.
-import * as Antd from '@vicons/antd'
-import * as Carbon from '@vicons/carbon'
-import * as Fa from '@vicons/fa'
-import * as Fluent from '@vicons/fluent'
-import * as Ionicons4 from '@vicons/ionicons4'
-import * as Ionicons5 from '@vicons/ionicons5'
-import * as Material from '@vicons/material'
-import * as Tabler from '@vicons/tabler'
+// Lightweight Icon Registry
+// Importing * from all icon libraries causes massive bundle sizes and browser hangs (~20mb+ of JS).
+// Instead, we register only the icons we use.
 
-// Priority order for icon lookup
-const iconSets = [
-    Fluent,
-    Ionicons5,
-    Ionicons4,
-    Antd,
-    Material,
-    Fa,
-    Tabler,
-    Carbon
-]
+import { Home } from '@vicons/ionicons5'
+
+// Registry to store allowed icons
+const registry: Record<string, any> = {
+    Home
+}
 
 /**
- * Searches for an icon component by name across all installed icon sets.
- * Returns the first match found based on the priority order above.
+ * Searches for an icon component by name in the local registry.
  */
 export const getIcon = (name: string) => {
-    for (const set of iconSets) {
-        if (name in set) {
-            // @ts-ignore - Dynamic access
-            return set[name]
-        }
+    if (registry[name]) {
+        return registry[name]
     }
-    console.warn(`[UiIcon] Icon not found: ${name}`)
+    console.warn(`[UiIcon] Icon not found: ${name}. Please register it in ~/utils/icon-registry.ts`)
     return null
+}
+
+/**
+ * Helper to register more icons from other files/plugins if needed
+ */
+export const registerIcons = (icons: Record<string, any>) => {
+    Object.assign(registry, icons)
 }
