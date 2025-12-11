@@ -31,7 +31,12 @@ const styles = computed(() => {
     const s: Record<string, string> = {}
 
     if (props.size) {
-        s.fontSize = typeof props.size === 'number' ? `${props.size}px` : props.size
+        // Handle string numbers like "20" or raw numbers
+        const rawSize = String(props.size)
+        // Check if only digits (with optional decimal) are provided
+        const isNumber = /^\d+(\.\d+)?$/.test(rawSize)
+
+        s.fontSize = isNumber ? `${rawSize}px` : rawSize
         s.width = '1em'
         s.height = '1em'
     }

@@ -266,7 +266,7 @@ const { currentTheme } = useTheme()
                                     ? 'router-active'
                                     : 'router-inactive'
                             ]">
-                            <UiIcon :name="item.icon" size="322" v-if="item.children.length <= 0" />
+                            <UiIcon :name="item.icon" size="22" v-if="item.children.length <= 0" />
                             <span>{{ item.name }}</span>
                         </component>
 
