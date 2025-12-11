@@ -1,29 +1,57 @@
+// Dynamic Icon Loader for Vue + Nuxt
 
-// Lightweight Icon Registry
-// Importing * from all icon libraries causes massive bundle sizes and browser hangs (~20mb+ of JS).
-// Instead, we register only the icons we use.
+const LIB_MAP: Record<string, () => Promise<any>> = {
+    fluent: () => import('@vicons/fluent'),
+    ionicons5: () => import('@vicons/ionicons5'),
+    antd: () => import('@vicons/antd'),
+    carbon: () => import('@vicons/carbon'),
+    material: () => import('@vicons/material'),
+    tabler: () => import('@vicons/tabler'),
+    fa: () => import('@vicons/fa'),
+    ionicons4: () => import('@vicons/ionicons4'),
+};
 
-import { Home } from '@vicons/ionicons5'
+// Cache for loaded libraries to avoid re-importing
+const loadedLibs: Record<string, any> = {};
 
-// Registry to store allowed icons
-const registry: Record<string, any> = {
-    Home
-}
+export const getIcon = async (name: string) => {
+    // 1. If user provides "lib:icon", loading specific library
+    if (name.includes(':')) {
+        const [lib, icon] = name.split(':');
+        if (!lib || !icon) return null;
 
-/**
- * Searches for an icon component by name in the local registry.
- */
-export const getIcon = (name: string) => {
-    if (registry[name]) {
-        return registry[name]
+        if (!LIB_MAP[lib]) {
+            console.warn(`[UiIcon] Unknown library: ${lib}`);
+            return null;
+        }
+
+        try {
+            if (!loadedLibs[lib]) {
+                loadedLibs[lib] = await LIB_MAP[lib]();
+            }
+            return loadedLibs[lib][icon] ?? null;
+        } catch (err) {
+            console.error(`[UiIcon] Failed loading ${lib}`, err);
+            return null;
+        }
     }
-    console.warn(`[UiIcon] Icon not found: ${name}. Please register it in ~/utils/icon-registry.ts`)
-    return null
-}
 
-/**
- * Helper to register more icons from other files/plugins if needed
- */
-export const registerIcons = (icons: Record<string, any>) => {
-    Object.assign(registry, icons)
-}
+    // 2. Search mode: loop until found
+    for (const lib in LIB_MAP) {
+        try {
+            if (!loadedLibs[lib]) {
+                loadedLibs[lib] = await LIB_MAP[lib]();
+            }
+
+            const module = loadedLibs[lib];
+            if (module[name]) {
+                return module[name];
+            }
+        } catch (err) {
+            console.warn(`[UiIcon] Error scanning lib ${lib}`, err);
+        }
+    }
+
+    console.warn(`[UiIcon] Icon not found in any library: ${name}`);
+    return null;
+};

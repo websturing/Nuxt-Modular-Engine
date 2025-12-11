@@ -39,6 +39,19 @@ export default {
                     900: 'var(--secondary-900)',
                     DEFAULT: 'var(--secondary-500)',
                 },
+                black: {
+                    50: 'var(--black-50)',
+                    100: 'var(--black-100)',
+                    200: 'var(--black-200)',
+                    300: 'var(--black-300)',
+                    400: 'var(--black-400)',
+                    500: 'var(--black-500)',
+                    600: 'var(--black-600)',
+                    700: 'var(--black-700)',
+                    800: 'var(--black-800)',
+                    900: 'var(--black-900)',
+                    DEFAULT: 'var(--black-500)',
+                },
                 // Add semantic colors from variables.css
                 sidebar: {
                     bg: 'var(--bg-sidebar)',
