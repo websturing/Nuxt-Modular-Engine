@@ -7,7 +7,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div>
+    <div class="text-secondary-50">
         index
     </div>
 </template>

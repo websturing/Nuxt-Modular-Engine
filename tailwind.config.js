@@ -42,7 +42,7 @@ export default {
                 // Add semantic colors from variables.css
                 sidebar: {
                     bg: 'var(--bg-sidebar)',
-                    text: 'var(--text-primary)',
+                    text: 'var(--text-secondary-50)',
                 },
             },
             fontFamily: {

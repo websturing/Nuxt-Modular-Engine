@@ -13,7 +13,7 @@ const availableThemes: ThemeDefinition[] = [
 
 export const useTheme = () => {
     // State
-    const currentTheme = useState<ThemeName>('theme-color', () => 'indigo');
+    const currentTheme = useState<ThemeName>('theme-color', () => 'blue');
 
     /**
      * Apply theme to <html> tag using useHead

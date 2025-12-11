@@ -20,7 +20,7 @@ const { currentTheme } = useTheme()
             <div
                 class="bg-sidebar-bg text-primary-50 h-full flex flex-col overflow-hidden m-1 rounded-lg p-1 transition-colors duration-300">
                 <div class="text-center my-5 text-lg font-semibold tracking-wide">
-                    Sewing Application
+                    Sewing Application {{ currentTheme }}
                 </div>
                 <div class="flex-1 overflow-y-auto p-2">
                     <nav class="space-y-2">
