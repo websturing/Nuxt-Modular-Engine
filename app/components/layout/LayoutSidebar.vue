@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+import { NuxtLink } from '#components'
 interface Permission {
     action: string
     permission_name: string
@@ -17,9 +17,15 @@ interface MenuItem {
 const sidebarOpen = ref(false)
 const router = useRouter()
 
-const routeExists = (name: string) => {
-    return router.getRoutes().some(r => r.name === name)
-}
+const existingRoutes = ref<string[]>([])
+
+onMounted(() => {
+    existingRoutes.value = router.getRoutes().map(r => String(r.name))
+})
+
+const routeExists = (name: string) =>
+    existingRoutes.value.includes(name)
+
 
 const menu: MenuItem[] = [
     {
@@ -224,6 +230,7 @@ const processedMenu = computed(() =>
         })) || []
     }))
 )
+
 const { currentTheme } = useTheme()
 </script>
 
@@ -259,7 +266,7 @@ const { currentTheme } = useTheme()
                                     ? 'router-active'
                                     : 'router-inactive'
                             ]">
-                            <UiIcon :name="item.icon" size="20" />
+                            <UiIcon :name="item.icon" size="322" v-if="item.children.length <= 0" />
                             <span>{{ item.name }}</span>
                         </component>
 

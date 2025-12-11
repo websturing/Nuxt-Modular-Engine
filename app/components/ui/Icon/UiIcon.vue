@@ -56,11 +56,8 @@ const styles = computed(() => {
 </template>
 
 <style scoped>
-.ui-icon {
-    :deep(svg) {
-        height: 1em;
-        width: 1em;
-        fill: currentColor;
-    }
+.ui-icon :deep(svg) {
+    height: 1em !important;
+    width: 1em !important;
 }
 </style>
