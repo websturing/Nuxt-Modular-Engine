@@ -242,7 +242,7 @@ const { currentTheme } = useTheme()
         'lg:translate-x-0'
     ]">
 
-        <div class="bg-sidebar-bg text-primary-50 h-full flex flex-col overflow-hidden m-1 rounded-lg p-1">
+        <div class="bg-sidebar-bg shadow-lg text-primary-50 h-full flex flex-col overflow-hidden m-1 rounded-lg p-1">
 
             <!-- TITLE -->
             <div class="text-center my-5 text-lg font-semibold tracking-wide">
