@@ -32,7 +32,7 @@ const menu: MenuItem[] = [
         id: 1,
         name: "Dashboard",
         slug: "dashboard",
-        icon: "SmartHome",
+        icon: "home-2-broken",
         permissions: [
             { action: "read", permission_name: "dashboard.read" }
         ],
@@ -56,7 +56,7 @@ const menu: MenuItem[] = [
                 id: 12,
                 name: "GL Number",
                 slug: "gls",
-                icon: "BorderLeft24Filled",
+                icon: "documents-broken",
                 permissions: [
                     { action: "create", permission_name: "gls.create" },
                     { action: "read", permission_name: "gls.read" },
@@ -71,7 +71,7 @@ const menu: MenuItem[] = [
                 id: 17,
                 name: "Leaders",
                 slug: "leaders",
-                icon: "ChartPerson20Filled",
+                icon: "shield-user-broken",
                 permissions: [
                     { action: "create", permission_name: "leaders.create" },
                     { action: "read", permission_name: "leaders.read" },
@@ -102,7 +102,7 @@ const menu: MenuItem[] = [
                 id: 11,
                 name: "Stock In",
                 slug: "stock-ins",
-                icon: "QrCodeScannerSharp",
+                icon: "qr-code-broken",
                 permissions: [
                     { action: "create", permission_name: "stock-ins.create" },
                     { action: "read", permission_name: "stock-ins.read" },
@@ -117,7 +117,7 @@ const menu: MenuItem[] = [
                 id: 8,
                 name: "Stock Out",
                 slug: "stockout",
-                icon: "Scan",
+                icon: "cash-out-broken",
                 permissions: [
                     { action: "read", permission_name: "stockout.read" },
                     { action: "create", permission_name: "stockout.create" },
@@ -132,7 +132,7 @@ const menu: MenuItem[] = [
                 id: 9,
                 name: "Defect",
                 slug: "defect",
-                icon: "CheckboxWarning20Regular",
+                icon: "shield-warning-bold",
                 permissions: [
                     { action: "read", permission_name: "defect.read" },
                     { action: "create", permission_name: "defect.create" },
@@ -149,7 +149,7 @@ const menu: MenuItem[] = [
         id: 13,
         name: "Lines",
         slug: "lines",
-        icon: "BrandAirtable",
+        icon: "turntable-minimalistic-bold",
         permissions: [
             { action: "create", permission_name: "lines.create" },
             { action: "read", permission_name: "lines.read" },
@@ -178,7 +178,7 @@ const menu: MenuItem[] = [
                 id: 21,
                 name: "Tracking Ticket",
                 slug: "replacement-tracking",
-                icon: "InsightsRound",
+                icon: "point-on-map-perspective-bold-duotone",
                 permissions: [
                     { action: "create", permission_name: "replacement-tracking.create" },
                     { action: "read", permission_name: "replacement-tracking.read" },
@@ -190,7 +190,7 @@ const menu: MenuItem[] = [
                 id: 18,
                 name: "Ticket Request",
                 slug: "replacement",
-                icon: "Forms",
+                icon: "chat-unread-bold",
                 permissions: [
                     { action: "create", permission_name: "replacement.create" },
                     { action: "read", permission_name: "replacement.read" },
@@ -205,7 +205,7 @@ const menu: MenuItem[] = [
                 id: 19,
                 name: "Approval",
                 slug: "replacement-approval",
-                icon: "DesignIdeas20Filled",
+                icon: "check-read-bold-duotone",
                 permissions: [
                     { action: "create", permission_name: "replacement-approval.create" },
                     { action: "read", permission_name: "replacement-approval.read" },
@@ -232,6 +232,7 @@ const processedMenu = computed(() =>
 )
 
 const { currentTheme } = useTheme()
+const iconDefault = "solar"
 </script>
 
 <template>
@@ -243,18 +244,15 @@ const { currentTheme } = useTheme()
     ]">
 
         <div class="bg-sidebar-bg shadow-lg text-primary-50 h-full flex flex-col overflow-hidden rounded-lg p-1">
-
-
             <!-- MENU -->
-            <div class="flex-1 overflow-y-auto p-2">
-                <nav class="space-y-1">
-
+            <div class="flex-1 overflow-y-auto p-2 mt-3">
+                <nav class="">
                     <template v-for="item in processedMenu" :key="item.slug">
 
                         <!-- === LEVEL 1 === -->
                         <component :is="item.exists ? NuxtLink : 'div'"
                             :to="item.exists ? { name: item.slug } : undefined" :class="[
-                                'flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200',
+                                'flex items-center gap-2 px-3 py-2 shadow-none transition-all duration-200',
                                 item.exists
                                     ? 'hover:bg-white/10 hover:text-white'
                                     : 'opacity-50 cursor-not-allowed',
@@ -262,7 +260,7 @@ const { currentTheme } = useTheme()
                                     ? 'router-active'
                                     : 'router-inactive'
                             ]">
-                            <UiIcon :name="item.icon" size="22" v-if="item.children.length <= 0" />
+                            <Icon :name="iconDefault + ':' + item.icon" size="24" v-if="item.children.length <= 0" />
                             <span>{{ item.name }}</span>
                         </component>
 
@@ -272,7 +270,7 @@ const { currentTheme } = useTheme()
                             <template v-for="child in item.children" :key="child.slug">
                                 <component :is="child.exists ? NuxtLink : 'div'"
                                     :to="child.exists ? { name: child.slug } : undefined" :class="[
-                                        'flex items-center gap-2 px-3 py-1 rounded-lg transition-all duration-200',
+                                        'flex items-center gap-2 px-1 py-1 rounded-lg transition-all duration-200',
                                         child.exists
                                             ? 'hover:bg-white/10 hover:text-white'
                                             : 'opacity-50 cursor-not-allowed',
@@ -280,7 +278,7 @@ const { currentTheme } = useTheme()
                                             ? 'router-active'
                                             : 'router-inactive'
                                     ]">
-                                    <UiIcon :name="child.icon" size="18" />
+                                    <Icon :name="iconDefault + ':' + child.icon" size="20" />
                                     <span>{{ child.name }}</span>
                                 </component>
                             </template>
@@ -293,7 +291,8 @@ const { currentTheme } = useTheme()
             </div>
 
             <!-- FOOTER -->
-            <div class="p-2 text-center text-xs text-gray-500">
+            <div class="p-2 flex flex-col gap-2 text-xs text-center">
+                <UiButton variant="danger" type="button">Logout</UiButton>
                 &copy; 2024
             </div>
 

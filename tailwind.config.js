@@ -55,6 +55,19 @@ export default {
                 white: {
                     50: 'var(--neutral-50)',
                 },
+                danger: {
+                    50: 'var(--danger-50)',
+                    100: 'var(--danger-100)',
+                    200: 'var(--danger-200)',
+                    300: 'var(--danger-300)',
+                    400: 'var(--danger-400)',
+                    500: 'var(--danger-500)',
+                    600: 'var(--danger-600)',
+                    700: 'var(--danger-700)',
+                    800: 'var(--danger-800)',
+                    900: 'var(--danger-900)',
+                    DEFAULT: 'var(--danger-500)',
+                },
                 // Add semantic colors from variables.css
                 sidebar: {
                     bg: 'var(--bg-sidebar)',

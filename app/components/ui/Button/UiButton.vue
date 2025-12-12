@@ -26,7 +26,6 @@ const buttonClasses = computed(() => [
     // Base styles
     'inline-flex items-center justify-center gap-2 rounded-lg font-medium',
     'transition-all duration-200 ease-in-out cursor-pointer',
-    'focus:outline-none focus:ring-2 focus:ring-offset-2',
     'disabled:cursor-not-allowed disabled:opacity-50',
 
     // Full width
@@ -58,7 +57,7 @@ const buttonClasses = computed(() => [
             props.variant === 'ghost',
 
         // Danger
-        'bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-700 hover:to-red-600 shadow-md hover:shadow-lg focus:ring-red-500':
+        'bg-gradient-to-r from-danger-500 to-danger-600 text-white hover:from-danger-600 hover:to-danger-700':
             props.variant === 'danger',
     },
 ])

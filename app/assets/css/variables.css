@@ -84,6 +84,17 @@
   --black-700: #262626;
   --black-800: #171717;
   --black-900: #0a0a0a;
+
+  --danger-50:  #F8EDEE;
+--danger-100: #F1DBDD;
+--danger-200: #E3B7BB;
+--danger-300: #D59298;
+--danger-400: #C86E75;
+--danger-500: #C1666B; /* Base */
+--danger-600: #A9585D;
+--danger-700: #914A4F;
+--danger-800: #793C41;
+--danger-900: #612E33;
 }
 
 
