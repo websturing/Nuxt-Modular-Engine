@@ -3,12 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+
   // ========================================
   // 📦 MODULES
   // ========================================
   modules: [// '@pinia/nuxt',        // Uncomment jika butuh state management
-  // '@vueuse/nuxt',       // Uncomment untuk utility composables
-  '@nuxtjs/tailwindcss', '@nuxt/icon'],
+    // '@vueuse/nuxt',       // Uncomment untuk utility composables
+    '@nuxtjs/tailwindcss', '@nuxt/icon', 'nuxt-time'],
 
   // ========================================
   // 🎨 CSS & STYLING
@@ -60,7 +61,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: process.env.API_SECRET,
     public: {
-      apiBase: process.env.API_BASE_URL || 'http://localhost:8000/api'
+      apiBase: process.env.API_BASE_URL || 'http://localhost:8000/api',
+      timezone: process.env.NUXT_PUBLIC_TIMEZONE || 'Asia/Jakarta',
+      timeFormat: process.env.NUXT_PUBLIC_TIME_FORMAT || 'HH:mm:ss',
+      dateFormat: process.env.NUXT_PUBLIC_DATE_FORMAT || 'YYYY-MM-DD'
     }
   },
 
