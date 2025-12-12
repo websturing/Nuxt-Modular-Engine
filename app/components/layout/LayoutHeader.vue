@@ -20,7 +20,8 @@ import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui';
         </div>
 
         <!-- Center Search -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm hidden md:block">
+        <div
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 focus-within:w-80 md:focus-within:w-96 transition-all duration-300 hidden md:block">
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"

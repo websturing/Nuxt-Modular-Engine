@@ -6,11 +6,9 @@ export default defineNuxtConfig({
   // ========================================
   // 📦 MODULES
   // ========================================
-  modules: [
-    '@nuxtjs/tailwindcss',
-    // '@pinia/nuxt',        // Uncomment jika butuh state management
-    // '@vueuse/nuxt',       // Uncomment untuk utility composables
-  ],
+  modules: [// '@pinia/nuxt',        // Uncomment jika butuh state management
+  // '@vueuse/nuxt',       // Uncomment untuk utility composables
+  '@nuxtjs/tailwindcss', '@nuxt/icon'],
 
   // ========================================
   // 🎨 CSS & STYLING
