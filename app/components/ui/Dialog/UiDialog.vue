@@ -24,8 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
     size: 'md',
     closeOnOverlay: true,
     showClose: true,
-    originX: 50,
-    originY: 50,
+    originX: undefined,
+    originY: undefined,
 })
 
 const emit = defineEmits<{
@@ -45,11 +45,46 @@ const sizeClasses = computed(() => ({
     'max-w-[90vw] max-h-[90vh]': props.size === 'full',
 }))
 
+const triggerOrigin = ref({ x: 50, y: 50 })
+
+
+function handleTriggerClick(event: MouseEvent) {
+    const el = event.currentTarget as HTMLElement
+    if (el) {
+        const rect = el.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+
+        triggerOrigin.value = {
+            x: (centerX / window.innerWidth) * 100,
+            y: (centerY / window.innerHeight) * 100
+        }
+    }
+}
+
+// Method public untuk membuka dialog dari luar dengan animasi yang benar
+function open(event?: MouseEvent) {
+    if (event) {
+        handleTriggerClick(event)
+    }
+    isOpen.value = true
+}
+
+// Method public untuk menutup
+function close() {
+    isOpen.value = false
+}
+
+defineExpose({
+    open,
+    close
+})
+
 // Hitung posisi awal dan akhir untuk animasi
 const animationVars = computed(() => {
-    // Posisi awal (dari button)
-    const startX = props.originX
-    const startY = props.originY
+    // Posisi awal (dari button atau defaults)
+    const startX = props.originX ?? triggerOrigin.value.x
+    const startY = props.originY ?? triggerOrigin.value.y
 
     // Posisi akhir (center)
     const endX = 50
@@ -68,11 +103,12 @@ function handleOverlayClick() {
         isOpen.value = false
     }
 }
+
 </script>
 
 <template>
     <DialogRoot v-model:open="isOpen">
-        <DialogTrigger v-if="$slots.trigger" as-child>
+        <DialogTrigger v-if="$slots.trigger" as-child @click="handleTriggerClick">
             <slot name="trigger" />
         </DialogTrigger>
 

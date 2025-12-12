@@ -234,23 +234,6 @@ const processedMenu = computed(() =>
 const { currentTheme } = useTheme()
 const iconDefault = "solar"
 const isDialogOpen = ref<boolean>(false)
-const dialogOriginX = ref<number>(50)
-const dialogOriginY = ref<number>(50)
-
-// Hitung origin position dari button
-function openLogoutDialog(event: MouseEvent) {
-    const button = event.currentTarget as HTMLElement
-    const rect = button.getBoundingClientRect()
-
-    // Hitung posisi relative terhadap viewport dalam persen
-    const x = ((rect.left + rect.width / 2) / window.innerWidth) * 100
-    const y = ((rect.top + rect.height / 2) / window.innerHeight) * 100
-
-    dialogOriginX.value = x
-    dialogOriginY.value = y
-
-    isDialogOpen.value = true
-}
 </script>
 
 <template>
@@ -310,34 +293,35 @@ function openLogoutDialog(event: MouseEvent) {
 
             <!-- FOOTER -->
             <div class="p-2 flex flex-col gap-2 text-xs text-center">
-                <UiButton variant="danger" type="button" @click="openLogoutDialog">
-                    Logout
-                </UiButton>
+                <UiDialog v-model:open="isDialogOpen">
+                    <template #trigger>
+                        <UiButton variant="danger" type="button" class="w-full">
+                            Logout
+                        </UiButton>
+                    </template>
+                    <template #title>
+                        Konfirmasi
+                    </template>
+
+                    <template #description>
+                        Apakah Anda yakin ingin melanjutkan?
+                    </template>
+
+                    Isi konten dialog di sini…
+
+                    <template #footer>
+                        <button class="px-4 py-2 border rounded" @click="isDialogOpen = false">
+                            Batal
+                        </button>
+                        <button class="px-4 py-2 bg-primary-600 text-white rounded">
+                            Lanjutkan
+                        </button>
+                    </template>
+                </UiDialog>
                 &copy; 2024
             </div>
 
         </div>
     </aside>
-
-    <UiDialog v-model:open="isDialogOpen" :origin-x="dialogOriginX" :origin-y="dialogOriginY">
-        <template #title>
-            Konfirmasi
-        </template>
-
-        <template #description>
-            Apakah Anda yakin ingin melanjutkan?
-        </template>
-
-        Isi konten dialog di sini…
-
-        <template #footer>
-            <button class="px-4 py-2 border rounded" @click="isDialogOpen = false">
-                Batal
-            </button>
-            <button class="px-4 py-2 bg-primary-600 text-white rounded">
-                Lanjutkan
-            </button>
-        </template>
-    </UiDialog>
 
 </template>
