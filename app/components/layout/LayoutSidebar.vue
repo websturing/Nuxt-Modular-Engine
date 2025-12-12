@@ -236,18 +236,14 @@ const { currentTheme } = useTheme()
 
 <template>
     <aside :class="[
-        'fixed top-0 left-0 bottom-0 w-64 z-10 transition-transform duration-300',
-        'h-[calc(100vh-0.5rem)]',
+        'fixed left-0 bottom-0 w-64 z-10 transition-transform duration-300 p-1',
+        'top-12',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'lg:translate-x-0'
     ]">
 
-        <div class="bg-sidebar-bg shadow-lg text-primary-50 h-full flex flex-col overflow-hidden m-1 rounded-lg p-1">
+        <div class="bg-sidebar-bg shadow-lg text-primary-50 h-full flex flex-col overflow-hidden rounded-lg p-1">
 
-            <!-- TITLE -->
-            <div class="text-center my-5 text-lg font-semibold tracking-wide">
-                Sewing Application
-            </div>
 
             <!-- MENU -->
             <div class="flex-1 overflow-y-auto p-2">

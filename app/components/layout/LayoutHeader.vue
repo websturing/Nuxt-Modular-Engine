@@ -3,17 +3,52 @@ import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui';
 </script>
 
 <template>
-    <div class="pt-2 pr-2 flex items-center justify-between">
-        <div></div>
-        <div class="">
+    <div
+        class="h-12 ps-2 pe-4 flex items-center justify-between fixed top-0 right-0 left-0 z-20  transition-all duration-300">
+        <!-- Left side -->
+        <div class="font-semibold text-lg tracking-tight text-black dark:text-white">
+            <div class="flex items-center gap-3">
+                <div
+                    class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg">
+                    <div
+                        class="w-6 h-6 bg-blue-500 rounded text-white flex items-center justify-center text-xs font-bold">
+                        S
+                    </div>
+                    <span class="text-sm font-medium">Sewing Application</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Search -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm hidden md:block">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </div>
+                <input type="text"
+                    class="block w-full h-8 pl-10 pr-12 rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                    placeholder="Search..." />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <kbd
+                        class="inline-flex items-center h-5 px-1.5 border border-gray-200 dark:border-gray-600 rounded bg-white dark:bg-gray-700 font-sans text-[10px] font-medium text-gray-500 dark:text-gray-400">
+                        <span class="text-xs mr-0.5">⌘</span>K
+                    </kbd>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side -->
+        <div class="flex items-center gap-4">
             <AvatarRoot
-                class="bg-blackA3 inline-flex h-[45px] w-[45px] select-none items-center justify-center overflow-hidden rounded-full align-middle">
+                class="bg-gray-100 dark:bg-gray-800 inline-flex h-9 w-9 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:ring-2 hover:ring-primary-500 transition-all cursor-pointer">
                 <AvatarImage class="h-full w-full rounded-[inherit] object-cover"
                     src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
                     alt="Colm Tuite" />
-                <AvatarFallback
-                    class="text-grass11 dark:text-stone-300 leading-1 flex h-full w-full items-center justify-center bg-white dark:bg-stone-800 text-sm font-medium"
-                    :delay-ms="600">
+                <AvatarFallback class="text-gray-600 dark:text-gray-300 md:text-xs font-medium" :delay-ms="600">
                     CT
                 </AvatarFallback>
             </AvatarRoot>
