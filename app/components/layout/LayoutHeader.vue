@@ -52,6 +52,28 @@ const { dateTime } = useClientTime()
         </div>
         <!-- Right side -->
         <div class="flex items-center gap-4">
+            <div>
+                <UiDropdown icon="solar:bell-bing-bold" label="">
+                    <DropdownMenuItem value="New Tab"
+                        class="group text-xs leading-none text-grass11 rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[highlighted]:text-green1">
+                        New Tab
+                        <div
+                            class="ml-auto pl-[20px] text-mauve11 group-data-[highlighted]:text-white group-data-[disabled]:text-mauve8">
+                            ⌘+T
+                        </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem class="px-3 py-2 rounded-lg hover:bg-gray-100">
+                        Settings
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator class="my-2 border-t" />
+
+                    <DropdownMenuItem class="px-3 py-2 rounded-lg text-red-600 hover:bg-red-50">
+                        Logout
+                    </DropdownMenuItem>
+                </UiDropdown>
+
+            </div>
             <AvatarRoot
                 class="bg-gray-100 dark:bg-gray-800 inline-flex h-9 w-9 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:ring-2 hover:ring-primary-500 transition-all cursor-pointer">
                 <AvatarImage class="h-full w-full rounded-[inherit] object-cover"
