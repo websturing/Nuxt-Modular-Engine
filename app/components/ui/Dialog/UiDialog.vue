@@ -124,7 +124,7 @@ function handleOverlayClick() {
                 sizeClasses,
             ]" :style="animationVars" @pointer-down-outside="(e) => !closeOnOverlay && e.preventDefault()">
 
-                <div class="flex items-start justify-between p-5 border-b border-gray-100">
+                <div class="flex items-start justify-between p-5  border-gray-100">
                     <div class="space-y-1.5">
                         <DialogTitle class="text-lg font-semibold text-gray-900">
                             <slot name="title">Dialog Title</slot>
@@ -147,8 +147,7 @@ function handleOverlayClick() {
                     <slot />
                 </div>
 
-                <div v-if="$slots.footer"
-                    class="flex items-center justify-end gap-3 p-5 border-t border-gray-100 bg-gray-50/50 rounded-b-xl">
+                <div v-if="$slots.footer" class="flex items-center justify-end gap-3 p-5 bg-gray-50/50 rounded-b-xl">
                     <slot name="footer" />
                 </div>
             </DialogContent>
