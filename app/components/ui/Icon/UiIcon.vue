@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { getIcon } from '~/utils/icon-registry'
 
 interface Props {
-    name?: string
+    name?: string | undefined
     size?: string | number
     color?: string
     depth?: number | string
@@ -11,15 +11,10 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const resolvedIcon = ref<any>(null)
+const resolvedIcon = shallowRef<any>(null)
 
 // Resolve icon name → actual component
 const loadIcon = async () => {
-    if (!props.name) {
-        resolvedIcon.value = null
-        return
-    }
-
     const icon = await getIcon(props.name)
     resolvedIcon.value = icon
 }

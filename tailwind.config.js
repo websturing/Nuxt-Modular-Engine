@@ -52,11 +52,17 @@ export default {
                     900: 'var(--black-900)',
                     DEFAULT: 'var(--black-500)',
                 },
+                white: {
+                    50: 'var(--neutral-50)',
+                },
                 // Add semantic colors from variables.css
                 sidebar: {
                     bg: 'var(--bg-sidebar)',
                     text: 'var(--text-secondary-50)',
                 },
+                background: {
+                    bg: 'var(--bg-page)',
+                }
             },
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],

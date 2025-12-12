@@ -37,7 +37,7 @@ const saveToCache = (icon: string, lib: string) => {
     }
 };
 
-export const getIcon = async (name: string) => {
+export const getIcon = async (name: string | undefined) => {
     if (!name) return null;
 
     // 1. Direct "lib:icon" mode
