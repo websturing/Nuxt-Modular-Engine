@@ -1,4 +1,22 @@
 <script setup lang="ts">
+const isDialogOpen = ref(false)
+const dialogOriginX = ref<number>(50)
+const dialogOriginY = ref<number>(50)
+
+// Hitung origin position dari button
+function openLogoutDialog(event: MouseEvent) {
+    const button = event.currentTarget as HTMLElement
+    const rect = button.getBoundingClientRect()
+
+    // Hitung posisi relative terhadap viewport dalam persen
+    const x = ((rect.left + rect.width / 2) / window.innerWidth) * 100
+    const y = ((rect.top + rect.height / 2) / window.innerHeight) * 100
+
+    dialogOriginX.value = x
+    dialogOriginY.value = y
+
+    isDialogOpen.value = true
+}
 </script>
 
 <template>
@@ -15,8 +33,31 @@
                 <div
                     class="min-h-[calc(100vh-3.5rem)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm p-4 w-full relative">
                     <NuxtPage />
+                    <UiButton variant="danger" type="button" @click="openLogoutDialog">
+                        Logout
+                    </UiButton>
                 </div>
             </div>
+            <UiDialog v-model:open="isDialogOpen" :origin-x="dialogOriginX" :origin-y="dialogOriginY">
+                <template #title>
+                    Konfirmasi
+                </template>
+
+                <template #description>
+                    Apakah Anda yakin ingin melanjutkan?
+                </template>
+
+                Isi konten dialog di sini…
+
+                <template #footer>
+                    <button class="px-4 py-2 border rounded" @click="isDialogOpen = false">
+                        Batal
+                    </button>
+                    <button class="px-4 py-2 bg-primary-600 text-white rounded">
+                        Lanjutkan
+                    </button>
+                </template>
+            </UiDialog>
         </main>
 
     </div>
