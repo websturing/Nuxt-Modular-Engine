@@ -7,4 +7,7 @@
 definePageMeta({
     layout: 'admin'
 })
+useSeoMeta({
+    title: 'Dashboard'
+})
 </script>
