@@ -12,7 +12,7 @@ useSeoMeta({
   <NuxtLayout name="login">
     <div class="mb-4">
       <p class="text-2xl font-bold">Welcome Back</p>
-      <p class="text-lg text-gray-400">Enter your email and password to access your account.</p>
+      <p class="text text-gray-400">Enter your email and password to access your account.</p>
     </div>
     <login-form />
     <footer class="fixed bottom-10 text-gray-400">

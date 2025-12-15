@@ -12,26 +12,23 @@ const [email, emailProps] = defineField('email');
 const [password, passwordProps] = defineField('password');
 
 const onSubmit = handleSubmit((values) => {
-  // 'values' disini sudah otomatis bertipe LoginPayload
   console.log('Login:', values);
   const toastId = add({
     title: 'Processing Request...',
     description: 'Mohon tunggu sebentar, sedang memverifikasi akun.',
     variant: 'default',
-    duration: 99999 // Biar gak nutup sendiri pas lagi loading
+    duration: 99999
   })
   setTimeout(() => {
 
-    // 3. Setelah selesai (misal 2 detik), UPDATE toast yang tadi
     update(toastId, {
       title: 'Login Berhasil!',
       description: 'Selamat datang kembali di dashboard.',
       variant: 'success',
-      duration: 3000 // Set duration normal agar nanti hilang sendiri
+      duration: 3000
     })
 
-    // Opsi: Redirect halaman bisa ditaruh disini
-    // navigateTo('/dashboard')
+
 
   }, 2000)
 
