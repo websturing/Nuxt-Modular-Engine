@@ -11,6 +11,9 @@ interface Props {
     disabled?: boolean
     fullWidth?: boolean
     type?: 'button' | 'submit' | 'reset'
+    icon?: string
+    iconPos?: 'left' | 'right'
+    iconClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +23,15 @@ const props = withDefaults(defineProps<Props>(), {
     disabled: false,
     fullWidth: false,
     type: 'button',
+    iconPos: 'left',
+})
+
+const iconSizeClasses = computed(() => {
+    switch (props.size) {
+        case 'sm': return 'h-4 w-4'
+        case 'lg': return 'h-6 w-6'
+        default: return 'h-5 w-5'
+    }
 })
 
 const buttonClasses = computed(() => [
@@ -72,6 +84,8 @@ const buttonClasses = computed(() => [
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
 
+        <Icon v-if="icon && iconPos === 'left' && !loading" :name="icon" :class="[iconSizeClasses, iconClass]" />
         <slot />
+        <Icon v-if="icon && iconPos === 'right' && !loading" :name="icon" :class="[iconSizeClasses, iconClass]" />
     </button>
 </template>

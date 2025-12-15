@@ -9,6 +9,7 @@ const { dateTime } = useClientTime()
         <!-- Left side -->
         <div class="font-semibold text-lg tracking-tight text-black dark:text-white ">
             <div class="flex items-center gap-3">
+                <UiButton icon="solar:home-bold" label="Home" size="sm" variant="ghost" />
                 <div
                     class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg">
                     <div
@@ -17,7 +18,7 @@ const { dateTime } = useClientTime()
                     </div>
                     <span class="text-sm font-medium">Sewing Application</span>
                 </div>
-                <p class="text-sm text-gray-500"> {{ dateTime }}</p>
+                <p class="text-sm text-gray-500 hidden md:flex"> {{ dateTime }}</p>
             </div>
         </div>
 
