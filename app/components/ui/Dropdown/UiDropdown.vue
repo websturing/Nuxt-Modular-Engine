@@ -1,34 +1,54 @@
-<template>
-    <DropdownMenuRoot>
-        <DropdownMenuTrigger as-child>
-            <button class="flex items-center gap-2 px-3 py-2  hover:bg-gray-50 transition">
-                <Icon :name="icon" class="w-5 h-5" />
-                <span>{{ label }}</span>
-            </button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuPortal>
-            <DropdownMenuContent
-                class="min-w-[220px] outline-none bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
-                :side-offset="5">
-                <slot />
-            </DropdownMenuContent>
-        </DropdownMenuPortal>
-    </DropdownMenuRoot>
-</template>
-
 <script setup lang="ts">
 import {
     DropdownMenuContent,
     DropdownMenuPortal,
     DropdownMenuRoot,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from 'reka-ui';
 
 interface Props {
-    icon: string
     label: string
+    icon?: string       // Jadi opsional (?)
+    avatar?: string     // Prop baru untuk URL gambar
+    align?: 'start' | 'center' | 'end' // Opsional: biar posisi dropdown bisa diatur
 }
 
-const props = defineProps<Props>()
+// Default value
+withDefaults(defineProps<Props>(), {
+    icon: 'solar:user-circle-bold', // Default icon jika avatar & icon kosong
+    align: 'end' // Default rata kanan (cocok untuk pojok kanan atas)
+})
 </script>
+
+<template>
+    <DropdownMenuRoot>
+        <DropdownMenuTrigger as-child>
+            <button
+                class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors outline-none  border border-transparent">
+
+                <div v-if="avatar" class="w-8 h-8 rounded-full overflow-hidden border border-gray-200 shrink-0">
+                    <img :src="avatar" :alt="label" class="w-full h-full object-cover" />
+                </div>
+
+                <Icon v-else :name="icon" class="w-6 h-6 text-gray-600" />
+
+                <div class="flex flex-col text-left">
+                    <span class="text-sm font-medium text-gray-700 leading-tight">
+                        {{ label }}
+                    </span>
+                </div>
+
+                <Icon name="solar:alt-arrow-down-bold" class="w-3 h-3 text-gray-400 ml-1" />
+            </button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuPortal>
+            <DropdownMenuContent :align="align" :side-offset="8"
+                class="min-w-[200px] bg-white rounded-lg p-1 shadow-xl border border-gray-100 z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+
+                <slot />
+
+            </DropdownMenuContent>
+        </DropdownMenuPortal>
+    </DropdownMenuRoot>
+</template>

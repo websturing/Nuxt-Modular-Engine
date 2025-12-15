@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui';
 const { toggleSidebar } = useAdminLayout();
 const { dateTime } = useClientTime()
+
+const user = {
+    name: 'admin@gmail.com',
+    photo: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
+}
 
 </script>
 
@@ -21,7 +25,9 @@ const { dateTime } = useClientTime()
                     </div>
                     <span class="text-sm font-medium">Sewing Application</span>
                 </div>
-                <p class="text-sm text-gray-500 hidden md:flex"> {{ dateTime }}</p>
+                <ClientOnly>
+                    <p class="text-sm text-gray-500 hidden lg:block"> {{ dateTime }}</p>
+                </ClientOnly>
             </div>
         </div>
 
@@ -57,28 +63,33 @@ const { dateTime } = useClientTime()
         <!-- Right side -->
         <div class="flex items-center gap-4">
             <div>
-                <UiDropdown icon="solar:bell-bing-bold" label="">
-                    <DropdownMenuItem class="px-3 py-2 rounded-lg hover:bg-gray-100">
-                        Settings
-                    </DropdownMenuItem>
-
-                    <DropdownMenuSeparator class="my-2 border-t" />
-
-                    <DropdownMenuItem class="px-3 py-2 rounded-lg text-red-600 hover:bg-red-50">
-                        Logout
-                    </DropdownMenuItem>
-                </UiDropdown>
-
+                <UiButton icon="solar:bell-bing-bold" label="" variant="ghost" />
             </div>
-            <AvatarRoot
-                class="bg-gray-100 dark:bg-gray-800 inline-flex h-9 w-9 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:ring-2 hover:ring-primary-500 transition-all cursor-pointer">
-                <AvatarImage class="h-full w-full rounded-[inherit] object-cover"
-                    src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-                    alt="Colm Tuite" />
-                <AvatarFallback class="text-gray-600 dark:text-gray-300 md:text-xs font-medium" :delay-ms="600">
-                    CT
-                </AvatarFallback>
-            </AvatarRoot>
+            <UiDropdown :label="user.name" :avatar="user.photo">
+                <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider">
+                    Akun Saya
+                </div>
+
+                <NuxtLink to="/profile"
+                    class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
+                    <Icon name="solar:user-id-broken" class="w-4 h-4" />
+                    Profile
+                </NuxtLink>
+
+                <NuxtLink to="/settings"
+                    class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
+                    <Icon name="solar:settings-broken" class="w-4 h-4" />
+                    Settings
+                </NuxtLink>
+
+                <div class="h-px bg-gray-100 my-1"></div>
+
+                <button
+                    class="w-full flex items-center gap-2 px-2 py-2 text-sm text-red-600 hover:bg-red-50 rounded cursor-pointer">
+                    <Icon name="solar:logout-2-broken" class="w-4 h-4" />
+                    Logout
+                </button>
+            </UiDropdown>
         </div>
 
     </div>
