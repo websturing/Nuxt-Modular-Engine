@@ -50,7 +50,7 @@ const inputClasses = computed(() => [
     // Base styles
     'w-full rounded-lg border bg-white transition-all duration-200',
     'placeholder:text-gray-400',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0',
+    'focus:outline-none focus:ring-1 focus:ring-offset-0',
 
     {
         'py-1.5 text-sm': props.size === 'sm',
