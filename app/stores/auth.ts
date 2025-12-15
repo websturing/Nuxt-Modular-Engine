@@ -9,6 +9,8 @@ const defaultState = {
 
 export const useAuthStore = defineStore('auth', () => {
 
+
+
     const user = ref<typeof defaultState.user>(defaultState.user)
     const token = ref<typeof defaultState.token>(defaultState.token)
     const permissions = ref<typeof defaultState.permissions>(defaultState.permissions)
@@ -65,10 +67,6 @@ export const useAuthStore = defineStore('auth', () => {
             };
 
         } catch (err: any) {
-            // Log error asli untuk developer
-            // console.error(err); 
-
-            // Throw ulang error-nya agar bisa ditangkap oleh Component
             throw err;
         }
     }
@@ -80,4 +78,9 @@ export const useAuthStore = defineStore('auth', () => {
         token,
         permissions
     }
-})
+},
+    {
+        persist: {
+            key: 'auth'
+        }
+    })

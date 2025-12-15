@@ -19,7 +19,13 @@ export default defineNuxtConfig({
   ],
 
   piniaPersistedstate: {
-    storage: 'localStorage', // Sesuai permintaanmu
+    storage: 'cookies', // Set default ke cookies
+    cookieOptions: {
+      sameSite: 'lax', // Penting untuk CSRF protection
+      // Secure: true hanya aktif di HTTPS (Production), di localhost (HTTP) jadi false biar gak error
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24 * 7, // Token bertahan 7 hari (opsional, sesuaikan kebutuhan)
+    },
   },
 
   // ========================================
