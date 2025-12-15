@@ -20,7 +20,7 @@ const featuresDir = path.resolve(__dirname, '../app/features');
 const targetDir = path.join(featuresDir, featureName);
 
 // Daftar sub-folder yang ingin dibuat
-const subFolders = ['components', 'composables', 'types', 'utils'];
+const subFolders = ['components', 'composables', 'types', 'utils', 'pages'];
 
 // Fungsi Helper untuk Capitalize (misal: auth -> Auth)
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -51,6 +51,12 @@ subFolders.forEach((folder) => {
         // Buat file component dummy
         const compName = `${capitalize(featureName.replace(/-/g, ''))}Container`;
         const content = `<script setup lang="ts">\n</script>\n\n<template>\n  <div>\n    ${featureName} component\n  </div>\n</template>`;
+        fs.writeFileSync(path.join(folderPath, `${compName}.vue`), content);
+    }
+    else if (folder === 'pages') {
+        // Buat file component dummy
+        const compName = `${capitalize(featureName.replace(/-/g, ''))}Page`;
+        const content = `<script setup lang="ts">\n</script>\n\n<template>\n  <div>\n    ${featureName} page\n  </div>\n</template>`;
         fs.writeFileSync(path.join(folderPath, `${compName}.vue`), content);
     }
 });
