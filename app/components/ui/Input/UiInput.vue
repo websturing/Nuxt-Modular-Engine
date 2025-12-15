@@ -14,6 +14,9 @@ interface Props {
     success?: boolean
     size?: 'sm' | 'md' | 'lg'
     id?: string
+    leadingIcon?: string
+    trailingIcon?: string
+    loading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,7 +26,19 @@ const props = withDefaults(defineProps<Props>(), {
     readonly: false,
     error: false,
     success: false,
+    loading: false,
 })
+
+const slots = useSlots()
+const showPassword = ref(false)
+const inputType = computed(() => {
+    if (props.type === 'password' && showPassword.value) return 'text'
+    return props.type
+})
+
+const togglePassword = () => {
+    showPassword.value = !showPassword.value
+}
 
 const emit = defineEmits<{
     'update:modelValue': [value: string]
@@ -37,11 +52,16 @@ const inputClasses = computed(() => [
     'placeholder:text-gray-400',
     'focus:outline-none focus:ring-2 focus:ring-offset-0',
 
-    // Size variants
     {
-        'px-3 py-1.5 text-sm': props.size === 'sm',
-        'px-4 py-2.5 text-sm': props.size === 'md',
-        'px-4 py-3 text-base': props.size === 'lg',
+        'py-1.5 text-sm': props.size === 'sm',
+        'py-2.5 text-sm': props.size === 'md',
+        'py-3 text-base': props.size === 'lg',
+
+        // Horizontal padding based on icon/slot presence
+        'pl-3': !props.leadingIcon && !slots.prefix,
+        'pl-10': !!props.leadingIcon || !!slots.prefix,
+        'pr-3': !props.trailingIcon && !props.loading && props.type !== 'password' && !slots.suffix,
+        'pr-10': !!props.trailingIcon || !!props.loading || props.type === 'password' || !!slots.suffix,
     },
 
     // State variants
@@ -62,7 +82,37 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-    <input :id="id" :type="type" :value="modelValue" :placeholder="placeholder" :disabled="disabled"
-        :readonly="readonly" :class="inputClasses" @input="handleInput" @blur="emit('blur', $event)"
-        @focus="emit('focus', $event)">
+    <div class="relative w-full">
+        <!-- Leading / Prefix -->
+        <div v-if="leadingIcon || $slots.prefix" class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"
+            :class="{ 'pointer-events-none': !slots.prefix }">
+            <slot name="prefix">
+                <Icon v-if="leadingIcon" :name="leadingIcon" class="h-5 w-5" />
+            </slot>
+        </div>
+
+        <input :id="id" :type="inputType" :value="modelValue" :placeholder="placeholder" :disabled="disabled || loading"
+            :readonly="readonly" :class="inputClasses" v-bind="$attrs" @input="handleInput" @blur="emit('blur', $event)"
+            @focus="emit('focus', $event)">
+
+        <!-- Right Side Actions (Loading, Password Toggle, or Trailing Icon) -->
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+            <slot name="suffix">
+                <!-- Loading -->
+                <Icon v-if="loading" name="eos-icons:loading" class="h-5 w-5 animate-spin text-primary-500" />
+
+                <!-- Password Toggle -->
+                <button v-else-if="type === 'password'" type="button" tabindex="-1"
+                    class="flex focus:outline-none text-gray-400 hover:text-gray-600 transition-colors"
+                    @click="togglePassword">
+                    <Icon :name="showPassword ? 'heroicons:eye-slash' : 'heroicons:eye'" class="h-5 w-5" />
+                </button>
+
+                <!-- Trailing Icon (only if not loading and not password) -->
+                <div v-else-if="trailingIcon" class="flex items-center text-gray-400 pointer-events-none">
+                    <Icon :name="trailingIcon" class="h-5 w-5" />
+                </div>
+            </slot>
+        </div>
+    </div>
 </template>
