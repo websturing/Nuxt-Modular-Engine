@@ -28,6 +28,7 @@ const onSubmit = handleSubmit((values) => {
       duration: 3000
     })
 
+    useRouter().push('/dashboard')
 
 
   }, 2000)

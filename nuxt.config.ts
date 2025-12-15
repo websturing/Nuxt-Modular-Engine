@@ -9,9 +9,14 @@ export default defineNuxtConfig({
   // ========================================
   // 📦 MODULES
   // ========================================
-  modules: [// '@pinia/nuxt',        // Uncomment jika butuh state management
-    '@vueuse/nuxt',       // Uncomment untuk utility composables
-    '@nuxtjs/tailwindcss', '@nuxt/icon', 'nuxt-time'],
+  modules: [
+    '@vueuse/nuxt',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/icon',
+    'nuxt-time',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+  ],
 
   // ========================================
   // 🎨 CSS & STYLING

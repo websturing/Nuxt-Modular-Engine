@@ -1,5 +1,7 @@
 <template>
   <div>
+    <NuxtLoadingIndicator :duration="3000" :throttle="200" :height="4"
+      class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -16,7 +18,6 @@ onMounted(() => {
 })
 
 useHead({
-  // %s akan diganti dengan 'title' yang kamu set di useSeoMeta pada setiap halaman
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} | Sewing Application` : 'Nuxt Kaigrammm Template'
   }
