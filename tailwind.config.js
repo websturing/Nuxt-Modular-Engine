@@ -80,6 +80,22 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
             },
+            keyframes: {
+                // Animasi muncul dari atas
+                slideInFromTop: {
+                    '0%': { transform: 'translateY(-100%)', opacity: 0 },
+                    '100%': { transform: 'translateY(0)', opacity: 1 },
+                },
+                // Animasi keluar ke atas (opsional, atau bisa fade out)
+                slideOutToTop: {
+                    '0%': { transform: 'translateY(0)', opacity: 1 },
+                    '100%': { transform: 'translateY(-100%)', opacity: 0 },
+                },
+            },
+            animation: {
+                slideInFromTop: 'slideInFromTop 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                slideOutToTop: 'slideOutToTop 200ms ease-in',
+            },
         },
     },
     plugins: [tailwindAnimate],

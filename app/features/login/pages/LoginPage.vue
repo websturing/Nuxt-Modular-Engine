@@ -3,7 +3,9 @@
 definePageMeta({
   layout: false
 })
-
+useSeoMeta({
+  title: 'Welcome back, Login to your account'
+})
 </script>
 
 <template>

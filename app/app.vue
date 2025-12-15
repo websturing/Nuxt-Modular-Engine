@@ -3,11 +3,13 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <UiToastProvider />
   </div>
 </template>
 
 <script setup lang="ts">
 const { initTheme } = useTheme()
+import UiToastProvider from './components/ui/Toast/UiToast.vue'
 
 onMounted(() => {
   initTheme()
