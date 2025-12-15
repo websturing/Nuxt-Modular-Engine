@@ -4,7 +4,7 @@ import tailwindAnimate from 'tailwindcss-animate'
 export default {
     content: [
         './app/components/**/*.{vue,js,ts}',
-        './app/layouts/**/*.vue',
+        './app/shared/**/*.vue',
         './app/pages/**/*.vue',
         './app/app.vue',
         './app/**/*.vue',  // Catch-all untuk Nuxt 4

@@ -39,7 +39,7 @@ export default defineNuxtConfig({
     dirs: [
       'composables',
       'composables/core',
-      'modules/*/composables',
+      'features/*/composables',
       'utils',
     ],
   },
@@ -49,10 +49,9 @@ export default defineNuxtConfig({
   // ========================================
   components: [
     { path: '~/components/ui', prefix: 'Ui' },
-    { path: '~/components/common', prefix: '' },
-    { path: '~/components/layout', prefix: 'Layout' },
+    { path: '~/components/shared', prefix: '' },
     // Auto-import dari modules
-    { path: '~/modules', prefix: '', pathPrefix: false, extensions: ['vue'] },
+    { path: '~/features', prefix: '', pathPrefix: false, extensions: ['vue'] },
   ],
 
   // ========================================
