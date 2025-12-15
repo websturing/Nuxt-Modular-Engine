@@ -18,6 +18,10 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
   ],
 
+  piniaPersistedstate: {
+    storage: 'localStorage', // Sesuai permintaanmu
+  },
+
   // ========================================
   // 🎨 CSS & STYLING
   // ========================================

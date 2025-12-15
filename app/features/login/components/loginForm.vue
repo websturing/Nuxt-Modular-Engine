@@ -10,29 +10,41 @@ const { handleSubmit, errors, defineField } = useForm({
 
 const [email, emailProps] = defineField('email');
 const [password, passwordProps] = defineField('password');
+const { login } = useAuthStore();
+const isLoading = ref<boolean>(false)
 
-const onSubmit = handleSubmit((values) => {
-  console.log('Login:', values);
+const onSubmit = handleSubmit(async (values) => {
+
   const toastId = add({
-    title: 'Processing Request...',
-    description: 'Mohon tunggu sebentar, sedang memverifikasi akun.',
-    variant: 'default',
-    duration: 99999
-  })
-  setTimeout(() => {
+    description: "We're sending your Credential, hold on...",
+    duration: 9999999
+  });
 
+  try {
+    isLoading.value = true
+    const { user } = await login(values);
+
+    update(toastId,
+      {
+        title: 'Great to have you back ' + user.name + '!',
+        description: '',
+        duration: 3000,
+        variant: 'success'
+      });
+    isLoading.value = false
+    await navigateTo('/dashboard');
+
+  } catch (error: any) {
     update(toastId, {
-      title: 'Login Berhasil!',
-      description: 'Selamat datang kembali di dashboard.',
-      variant: 'success',
+      title: 'Login Gagal',
+      description: error.message,
+      variant: 'danger',
       duration: 3000
-    })
+    });
 
-    useRouter().push('/dashboard')
-
-
-  }, 2000)
-
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 
@@ -46,7 +58,9 @@ const onSubmit = handleSubmit((values) => {
           <Icon name="solar:eye-closed-bold-duotone" size="22" class="cursor-pointer hover:bg-primary-400" />
         </template>
       </UiInput>
-      <UiButton type="submit" icon="solar:login-3-bold" icon-pos="right" class="text-primary-100">Sign In</UiButton>
+      <UiButton type="submit" :loading="isLoading" icon="solar:login-3-bold" icon-pos="right" class="text-primary-100">
+        Sign In
+      </UiButton>
     </div>
   </form>
   <div
