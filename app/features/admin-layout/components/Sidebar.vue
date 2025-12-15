@@ -14,9 +14,9 @@ interface MenuItem {
     children: MenuItem[]
 }
 
-const sidebarOpen = ref(false)
 const router = useRouter()
-
+const sidebarRef = ref(null);
+const { isSidebarOpen, closeSidebar } = useAdminLayout();
 const existingRoutes = ref<string[]>([])
 
 onMounted(() => {
@@ -26,6 +26,13 @@ onMounted(() => {
 const routeExists = (name: string) =>
     existingRoutes.value.includes(name)
 
+onClickOutside(sidebarRef, () => {
+    if (isSidebarOpen.value) {
+        closeSidebar();
+    }
+}, {
+    ignore: ['.js-sidebar-toggle']
+});
 
 const menu: MenuItem[] = [
     {
@@ -237,10 +244,16 @@ const isDialogOpen = ref<boolean>(false)
 </script>
 
 <template>
-    <aside :class="[
-        'fixed left-0 bottom-0 w-64 z-10 transition-transform duration-300 p-1',
+    <Transition enter-active-class="transition-opacity duration-300" enter-from-class="opacity-0"
+        enter-to-class="opacity-100" leave-active-class="transition-opacity duration-300" leave-from-class="opacity-100"
+        leave-to-class="opacity-0">
+        <div v-if="isSidebarOpen" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity">
+        </div>
+    </Transition>
+    <aside ref="sidebarRef" :class="[
+        'fixed left-0 bottom-0 w-64 z-50 transition-transform duration-300 p-1',
         'top-12',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'lg:translate-x-0'
     ]">
 
@@ -323,5 +336,4 @@ const isDialogOpen = ref<boolean>(false)
 
         </div>
     </aside>
-
 </template>

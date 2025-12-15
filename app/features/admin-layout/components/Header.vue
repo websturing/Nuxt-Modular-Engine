@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui';
+const { toggleSidebar } = useAdminLayout();
 const { dateTime } = useClientTime()
+
 </script>
 
 <template>
@@ -9,7 +11,8 @@ const { dateTime } = useClientTime()
         <!-- Left side -->
         <div class="font-semibold text-lg tracking-tight text-black dark:text-white ">
             <div class="flex items-center gap-3">
-                <UiButton icon="solar:home-bold" label="Home" size="sm" variant="ghost" />
+                <UiButton icon="solar:hamburger-menu-broken" label="Home" variant="ghost" @click="toggleSidebar"
+                    class="lg:hidden" />
                 <div
                     class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg">
                     <div
@@ -55,14 +58,6 @@ const { dateTime } = useClientTime()
         <div class="flex items-center gap-4">
             <div>
                 <UiDropdown icon="solar:bell-bing-bold" label="">
-                    <DropdownMenuItem value="New Tab"
-                        class="group text-xs leading-none text-grass11 rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[highlighted]:text-green1">
-                        New Tab
-                        <div
-                            class="ml-auto pl-[20px] text-mauve11 group-data-[highlighted]:text-white group-data-[disabled]:text-mauve8">
-                            ⌘+T
-                        </div>
-                    </DropdownMenuItem>
                     <DropdownMenuItem class="px-3 py-2 rounded-lg hover:bg-gray-100">
                         Settings
                     </DropdownMenuItem>
