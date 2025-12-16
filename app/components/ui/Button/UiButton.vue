@@ -53,7 +53,7 @@ const buttonClasses = computed(() => [
     // Color variants
     {
         // Primary - Blue gradient
-        'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-700 hover:to-primary-600 shadow-md hover:shadow-lg focus:ring-primary-500':
+        'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-700 hover:to-primary-600 shadow-md hover:shadow-lg focus:ring-primary-500 text-secondary-200':
             props.variant === 'primary',
 
         // Secondary - Gray
@@ -61,7 +61,7 @@ const buttonClasses = computed(() => [
             props.variant === 'secondary',
 
         // Outline
-        'border-2 border-primary-500 text-primary-600 bg-transparent hover:bg-primary-50 focus:ring-primary-500':
+        'border border-primary-500 text-primary-600 bg-transparent hover:bg-primary-50 focus:ring-primary-500':
             props.variant === 'outline',
 
         // Ghost
@@ -69,7 +69,7 @@ const buttonClasses = computed(() => [
             props.variant === 'ghost',
 
         // Danger
-        'bg-gradient-to-r from-danger-500 to-danger-600 text-white hover:from-danger-600 hover:to-danger-700':
+        'bg-gradient-to-r from-danger-500 to-danger-600 text-white hover:from-danger-600 hover:to-danger-700 text-secondary-200':
             props.variant === 'danger',
     },
 ])

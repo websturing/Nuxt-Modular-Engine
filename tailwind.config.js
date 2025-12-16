@@ -53,7 +53,7 @@ export default {
                     DEFAULT: 'var(--black-500)',
                 },
                 white: {
-                    50: 'var(--neutral-50)',
+                    50: 'var(--white-50)',
                 },
                 danger: {
                     50: 'var(--danger-50)',

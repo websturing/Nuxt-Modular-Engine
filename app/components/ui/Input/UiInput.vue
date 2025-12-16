@@ -17,6 +17,8 @@ interface Props {
     leadingIcon?: string
     trailingIcon?: string
     loading?: boolean
+    label?: string
+    labelPosition?: 'top' | 'left'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
     error: false,
     success: false,
     loading: false,
+    labelPosition: 'top',
 })
 
 const slots = useSlots()
@@ -82,37 +85,48 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-    <div class="relative w-full">
-        <!-- Leading / Prefix -->
-        <div v-if="leadingIcon || $slots.prefix" class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"
-            :class="{ 'pointer-events-none': !slots.prefix }">
-            <slot name="prefix">
-                <Icon v-if="leadingIcon" :name="leadingIcon" class="h-5 w-5" />
-            </slot>
-        </div>
+    <div :class="[
+        'w-full flex',
+        labelPosition === 'left' ? 'flex-row items-center gap-3' : 'flex-col gap-1.5'
+    ]">
+        <label v-if="label" :for="id"
+            class="text-sm font-medium text-gray-700 dark:text-gray-200 flex-shrink-0 cursor-pointer">
+            {{ label }}
+        </label>
 
-        <input :id="id" :type="inputType" :value="modelValue" :placeholder="placeholder" :disabled="disabled || loading"
-            :readonly="readonly" :class="inputClasses" v-bind="$attrs" @input="handleInput" @blur="emit('blur', $event)"
-            @focus="emit('focus', $event)">
+        <div class="relative w-full">
+            <!-- Leading / Prefix -->
+            <div v-if="leadingIcon || $slots.prefix"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"
+                :class="{ 'pointer-events-none': !slots.prefix }">
+                <slot name="prefix">
+                    <Icon v-if="leadingIcon" :name="leadingIcon" class="h-5 w-5" />
+                </slot>
+            </div>
 
-        <!-- Right Side Actions (Loading, Password Toggle, or Trailing Icon) -->
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <slot name="suffix">
-                <!-- Loading -->
-                <Icon v-if="loading" name="eos-icons:loading" class="h-5 w-5 animate-spin text-primary-500" />
+            <input :id="id" :type="inputType" :value="modelValue" :placeholder="placeholder"
+                :disabled="disabled || loading" :readonly="readonly" :class="inputClasses" v-bind="$attrs"
+                @input="handleInput" @blur="emit('blur', $event)" @focus="emit('focus', $event)">
 
-                <!-- Password Toggle -->
-                <button v-else-if="type === 'password'" type="button" tabindex="-1"
-                    class="flex focus:outline-none text-gray-400 hover:text-gray-600 transition-colors"
-                    @click="togglePassword">
-                    <Icon :name="showPassword ? 'heroicons:eye-slash' : 'heroicons:eye'" class="h-5 w-5" />
-                </button>
+            <!-- Right Side Actions (Loading, Password Toggle, or Trailing Icon) -->
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <slot name="suffix">
+                    <!-- Loading -->
+                    <Icon v-if="loading" name="eos-icons:loading" class="h-5 w-5 animate-spin text-primary-500" />
 
-                <!-- Trailing Icon (only if not loading and not password) -->
-                <div v-else-if="trailingIcon" class="flex items-center text-gray-400 pointer-events-none">
-                    <Icon :name="trailingIcon" class="h-5 w-5" />
-                </div>
-            </slot>
+                    <!-- Password Toggle -->
+                    <button v-else-if="type === 'password'" type="button" tabindex="-1"
+                        class="flex focus:outline-none text-gray-400 hover:text-gray-600 transition-colors"
+                        @click="togglePassword">
+                        <Icon :name="showPassword ? 'heroicons:eye-slash' : 'heroicons:eye'" class="h-5 w-5" />
+                    </button>
+
+                    <!-- Trailing Icon (only if not loading and not password) -->
+                    <div v-else-if="trailingIcon" class="flex items-center text-gray-400 pointer-events-none">
+                        <Icon :name="trailingIcon" class="h-5 w-5" />
+                    </div>
+                </slot>
+            </div>
         </div>
     </div>
 </template>
