@@ -44,7 +44,7 @@ withDefaults(defineProps<Props>(), {
 
         <DropdownMenuPortal>
             <DropdownMenuContent :align="align" :side-offset="8"
-                class="min-w-[200px] bg-white rounded-lg p-1 shadow-xl border border-gray-100 z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                class="min-w-[200px] bg-white rounded-lg p-1 shadow-xl border border-gray-100 !z-[10000]  animate-in fade-in zoom-in-95 duration-200 origin-top-right">
 
                 <slot />
 

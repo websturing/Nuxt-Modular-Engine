@@ -63,12 +63,12 @@ const { openLogoutDialog } = useUiStore()
             </div>
         </div>
         <!-- Right side -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 z-50">
             <div>
                 <UiButton icon="solar:bell-bing-bold" label="" variant="ghost" />
             </div>
             <UiDropdown :label="user.name" :avatar="user.photo">
-                <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider">
+                <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider z-100">
                     Akun Saya
                 </div>
 

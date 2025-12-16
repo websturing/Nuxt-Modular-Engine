@@ -26,7 +26,7 @@ const handleLogout = async () => {
             <div class="h-full overflow-y-auto mt-1 pe-1">
                 <!-- Content Card Shell -->
                 <div
-                    class="min-h-[calc(100vh-3.5rem)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm p-4 w-full relative">
+                    class="min-h-[calc(100vh-3.5rem)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm p-5 w-full relative">
                     <NuxtPage />
                 </div>
             </div>
