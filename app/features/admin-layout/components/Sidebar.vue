@@ -313,22 +313,19 @@ const isDialogOpen = ref<boolean>(false)
                         </UiButton>
                     </template>
                     <template #title>
-                        Konfirmasi
+                        Logout
                     </template>
-
-                    <template #description>
-                        Apakah Anda yakin ingin melanjutkan?
-                    </template>
-
-                    Isi konten dialog di sini…
-
+                    <p class="text-gray-500">
+                        Are you sure you want to log out? Unsaved changes will be lost.
+                    </p>
                     <template #footer>
-                        <button class="px-4 py-2 border rounded" @click="isDialogOpen = false">
+                        <UiButton type="button" variant="secondary" @click="isDialogOpen = false">
                             Batal
-                        </button>
-                        <button class="px-4 py-2 bg-primary-600 text-white rounded">
-                            Lanjutkan
-                        </button>
+                        </UiButton>
+                        <UiButton variant="danger" type="button" icon="solar:logout-broken" icon-pos="right"
+                            class="!text-gray-100">
+                            Logout
+                        </UiButton>
                     </template>
                 </UiDialog>
                 &copy; 2024
