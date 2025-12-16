@@ -10,14 +10,15 @@ const defaultState = {
 export const useAuthStore = defineStore('auth', () => {
 
 
-
     const user = ref<typeof defaultState.user>(defaultState.user)
     const token = ref<typeof defaultState.token>(defaultState.token)
     const permissions = ref<typeof defaultState.permissions>(defaultState.permissions)
 
+    const isAuthenticated = computed(() => !!token.value)
     const config = useRuntimeConfig()
     const baseURL = config.public.apiBase
     const module = 'auth'
+
 
     // stores/auth.ts
     async function login(credentials: LoginForm) {
@@ -71,12 +72,29 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function logout() {
+        try {
+            await useApi('/auth/logout', { method: 'POST' });
+        } catch (error) {
+            // Abaikan error api, lanjut cleanup local
+        } finally {
+            token.value = null;
+            user.value = null;
+            permissions.value = [];
+
+            const router = useRouter();
+            router.push('/login');
+        }
+    }
+
 
     return {
         login,
+        logout,
         user,
         token,
-        permissions
+        permissions,
+        isAuthenticated
     }
 },
     {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-
 const isDialogOpen = ref(false)
 </script>
 
