@@ -13,16 +13,16 @@ const UserSchema = z.object({
     id: z.number(),
     name: z.string(),
     email: z.string().email(),
-    email_verified_at: z.string().nullable(),
-    created_at: z.string(),
-    updated_at: z.string(),
-    role_names: z.array(z.string()),
+    emailVerifiedAt: z.string().nullable(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    roleNames: z.array(z.string()),
 });
 
 export const LoginDataSchema = z.object({
     status: z.boolean(),
-    access_token: z.string(),
-    token_type: z.string(),
+    accessToken: z.string(),
+    tokenType: z.string(),
     user: UserSchema,
     roles: z.array(z.string()),
     permissions: z.array(z.string())

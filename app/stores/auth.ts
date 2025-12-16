@@ -23,44 +23,37 @@ export const useAuthStore = defineStore('auth', () => {
     // stores/auth.ts
     async function login(credentials: LoginForm) {
         try {
-            const { data, error } = await useFetch(baseURL + '/' + module + '/login', {
+            const { data, error } = await useApi('auth/login', {
                 method: 'POST',
                 body: credentials,
             });
 
-            // 1. Handle HTTP Error (401, 422, 500 dari Server)
             if (error.value) {
-                // Ambil pesan error spesifik dari backend jika ada
                 const serverMessage = error.value.data?.message || error.value.statusMessage;
                 throw new Error(serverMessage || 'Gagal menghubungi server');
             }
 
-            // 2. Validasi Zod (Gunakan safeParse agar tidak crash, tapi kita kontrol manual)
-            // safeParse lebih aman daripada parse untuk production
             const parsed = LoginResponseSchema.safeParse(data.value);
 
             if (!parsed.success) {
                 console.error("Zod Validation Failed:", parsed.error);
                 throw new Error("Format respons dari server tidak valid/berubah.");
             }
-
-            // 3. Handle Logic API (Status: false tapi HTTP 200)
-            // Kadang backend return 200 OK tapi isinya { status: false, message: "Wrong Password" }
-            const responseData = parsed.data; // Data sudah aman
+            const responseData = parsed.data;
 
             if (!responseData.status) {
                 throw new Error(responseData.message || "Login gagal.");
             }
 
-            // --- SUCCESS FLOW ---
-            const result = responseData.data; // Masuk ke object 'data' yang ada user & token
 
-            token.value = result.access_token;
+            const result = responseData.data;
+
+            token.value = result.accessToken;
             user.value = result.user;
             permissions.value = result.permissions;
 
             const cookieToken = useCookie('auth_token');
-            cookieToken.value = result.access_token;
+            cookieToken.value = result.accessToken;
 
             return {
                 message: parsed.data.message,

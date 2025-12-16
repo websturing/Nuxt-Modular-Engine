@@ -5,7 +5,8 @@ definePageMeta({
 </script>
 
 <template>
-    <div>
+    <div class="flex items-center gap-4">
         <profile-avatar />
+        <profile-account />
     </div>
 </template>

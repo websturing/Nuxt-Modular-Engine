@@ -1,3 +1,8 @@
 export const useProfile = () => {
-  return {}
+
+  const { user } = storeToRefs(useAuthStore())
+
+  return {
+    user
+  }
 }
