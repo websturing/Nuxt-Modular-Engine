@@ -1,6 +1,17 @@
 <script setup lang="ts">
 
-const isDialogOpen = ref(false)
+const isLoading = ref<boolean>(false)
+const { isLogoutDialogOpen } = storeToRefs(useUiStore())
+const { closeLogoutDialog } = useUiStore()
+const { logout } = useAuthStore()
+
+const handleLogout = async () => {
+    isLoading.value = true
+    await logout()
+    isLoading.value = false
+    closeLogoutDialog()
+}
+
 </script>
 
 <template>
@@ -21,6 +32,26 @@ const isDialogOpen = ref(false)
             </div>
 
         </main>
+
+
+
+        <UiDialog v-model:open="isLogoutDialogOpen">
+            <template #title>
+                Logout
+            </template>
+            <p class="text-gray-500">
+                Are you sure you want to log out? Unsaved changes will be lost.
+            </p>
+            <template #footer>
+                <UiButton type="button" variant="secondary" @click="closeLogoutDialog">
+                    Batal
+                </UiButton>
+                <UiButton variant="danger" :loading="isLoading" @click="handleLogout" type="button"
+                    icon="solar:logout-broken" icon-pos="right" class="!text-gray-100">
+                    Logout
+                </UiButton>
+            </template>
+        </UiDialog>
 
     </div>
 </template>

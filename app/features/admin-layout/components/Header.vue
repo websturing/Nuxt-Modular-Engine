@@ -7,6 +7,8 @@ const user = {
     photo: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
 }
 
+const { openLogoutDialog } = useUiStore()
+
 </script>
 
 <template>
@@ -84,7 +86,7 @@ const user = {
 
                 <div class="h-px bg-gray-100 my-1"></div>
 
-                <button
+                <button @click="openLogoutDialog"
                     class="w-full flex items-center gap-2 px-2 py-2 text-sm text-red-600 hover:bg-red-50 rounded cursor-pointer">
                     <Icon name="solar:logout-2-broken" class="w-4 h-4" />
                     Logout

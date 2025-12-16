@@ -240,7 +240,10 @@ const processedMenu = computed(() =>
 
 const { currentTheme } = useTheme()
 const iconDefault = "solar"
-const isDialogOpen = ref<boolean>(false)
+const { openLogoutDialog } = useUiStore()
+
+
+
 </script>
 
 <template>
@@ -306,28 +309,9 @@ const isDialogOpen = ref<boolean>(false)
 
             <!-- FOOTER -->
             <div class="p-2 flex flex-col gap-2 text-xs text-center">
-                <UiDialog v-model:open="isDialogOpen">
-                    <template #trigger>
-                        <UiButton variant="danger" type="button" class="w-full">
-                            Logout
-                        </UiButton>
-                    </template>
-                    <template #title>
-                        Logout
-                    </template>
-                    <p class="text-gray-500">
-                        Are you sure you want to log out? Unsaved changes will be lost.
-                    </p>
-                    <template #footer>
-                        <UiButton type="button" variant="secondary" @click="isDialogOpen = false">
-                            Batal
-                        </UiButton>
-                        <UiButton variant="danger" type="button" icon="solar:logout-broken" icon-pos="right"
-                            class="!text-gray-100">
-                            Logout
-                        </UiButton>
-                    </template>
-                </UiDialog>
+                <UiButton variant="danger" type="button" class="w-full" @click="openLogoutDialog">
+                    Logout
+                </UiButton>
                 &copy; 2024
             </div>
 
