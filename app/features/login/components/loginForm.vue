@@ -12,6 +12,11 @@ const [email, emailProps] = defineField('email');
 const [password, passwordProps] = defineField('password');
 const { login } = useAuthStore();
 const isLoading = ref<boolean>(false)
+const isShowPassword = ref<boolean>(false)
+
+const handleShowPassword = () => {
+  isShowPassword.value = !isShowPassword.value
+}
 
 const onSubmit = handleSubmit(async (values) => {
 
@@ -51,11 +56,13 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <form @submit="onSubmit" class="space-y-4">
     <div class="flex flex-col gap-4">
-      <UiInput placeholder="Email" leading-icon="solar:shield-user-broken" v-model="email" v-bind="emailProps" />
-      <UiInput placeholder="Password" leading-icon="solar:lock-broken" type="password" autocomplete="current-password"
-        v-model="password" v-bind="passwordProps">
+      <UiInput placeholder="Email" leading-icon="solar:shield-user-broken" v-model="email" v-bind="emailProps"
+        autocomplete="email" />
+      <UiInput placeholder="Password" leading-icon="solar:lock-broken" :type="isShowPassword ? 'text' : 'password'"
+        autocomplete="current-password" v-model="password" v-bind="passwordProps">
         <template #suffix>
-          <Icon name="solar:eye-closed-bold-duotone" size="22" class="cursor-pointer hover:bg-primary-400" />
+          <Icon :name="isShowPassword ? 'solar:eye-broken' : 'solar:eye-closed-bold-duotone'" size="22"
+            class="cursor-pointer hover:bg-primary-400" @click="handleShowPassword" />
         </template>
       </UiInput>
       <UiButton type="submit" :loading="isLoading" icon="solar:login-3-bold" icon-pos="right" class="text-primary-100">
