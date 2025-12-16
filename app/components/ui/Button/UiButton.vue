@@ -14,6 +14,7 @@ interface Props {
     icon?: string
     iconPos?: 'left' | 'right'
     iconClass?: string
+    customClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -72,6 +73,7 @@ const buttonClasses = computed(() => [
         'bg-gradient-to-r from-danger-500 to-danger-600 text-white hover:from-danger-600 hover:to-danger-700 text-secondary-200':
             props.variant === 'danger',
     },
+    props.customClass
 ])
 </script>
 

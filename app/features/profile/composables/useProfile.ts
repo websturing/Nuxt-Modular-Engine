@@ -1,6 +1,7 @@
-export const useProfile = () => {
 
-  const { user } = storeToRefs(useAuthStore())
+export const useProfile = () => {
+  const authStore = useAuthStore()
+  const { user } = storeToRefs(authStore)
 
   return {
     user

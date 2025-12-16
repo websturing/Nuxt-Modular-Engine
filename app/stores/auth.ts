@@ -80,10 +80,30 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function fetchUser() {
+        try {
+            const { data, error } = await useApi('auth/me');
+
+            if (error.value) {
+                throw error.value
+            }
+
+            const result = data.value as any;
+            if (result?.data) {
+                user.value = result.data
+            }
+
+            return result;
+        } catch (err) {
+            console.error('Fetch user failed', err)
+        }
+    }
+
 
     return {
         login,
         logout,
+        fetchUser,
         user,
         token,
         permissions,

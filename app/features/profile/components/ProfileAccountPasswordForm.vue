@@ -16,7 +16,7 @@ const buttonClasses = computed<{
 
     return {
         icon: isEditing ? 'solar:plain-2-broken' : 'solar:pen-new-square-linear',
-        text: isEditing ? 'Save Changes' : 'Edit Profile',
+        text: isEditing ? 'Save Changes' : 'Reset Password',
         variant: isEditing ? 'primary' : 'outline',
     }
 })
@@ -41,35 +41,34 @@ const handleAccountAction = async () => {
             <div
                 class="flex gap-3 items-center text-gray-700 dark:text-gray-200 border-b border-gray-100 dark:border-gray-800 pb-4">
                 <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
-                    <Icon name="solar:user-id-bold" class="size-6" />
+                    <Icon name="solar:shield-check-broken" class="size-6" />
                 </div>
                 <div>
-                    <h3 class="font-semibold text-lg leading-tight">Personal Information</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Update your personal details here.</p>
+                    <h3 class="font-semibold text-lg leading-tight">Password & Security</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Update your password here.</p>
                 </div>
             </div>
-            <UiButton :icon="buttonClasses.icon" icon-pos="right" :variant="buttonClasses.variant" :loading="isLoading"
-                type="button" @click="handleAccountAction">
-                {{ buttonClasses.text }}
-            </UiButton>
+
         </div>
         <form @submit.prevent="handleAccountAction" class="flex flex-col gap-5">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="space-y-1">
-                    <UiInput id="name" label="Full Name" v-model="name" v-bind="nameAttrs" :disabled="!isEdit"
+                    <UiInput id="name" label="Reset Password" v-model="name" v-bind="nameAttrs" :disabled="!isEdit"
                         :error="!!form.errors.value.name" placeholder="Enter your full name" />
                     <span v-if="form.errors.value.name" class="text-xs text-red-500 font-medium ml-1">{{
                         form.errors.value.name }}</span>
                 </div>
-
                 <div class="space-y-1">
-                    <UiInput id="email" label="Email Address" type="email" v-model="email" v-bind="emailAttrs"
-                        :disabled="!isEdit" :error="!!form.errors.value.email" placeholder="Enter your email" />
-                    <span v-if="form.errors.value.email" class="text-xs text-red-500 font-medium ml-1">{{
-                        form.errors.value.email }}</span>
+                    <UiInput id="name" label="Confirm Password" v-model="name" v-bind="nameAttrs" :disabled="!isEdit"
+                        :error="!!form.errors.value.name" placeholder="Enter your full name" />
+                    <span v-if="form.errors.value.name" class="text-xs text-red-500 font-medium ml-1">{{
+                        form.errors.value.name }}</span>
                 </div>
             </div>
-
+            <UiButton :icon="buttonClasses.icon" custom-class="!w-[200px]" icon-pos="right"
+                :variant="buttonClasses.variant" :loading="isLoading" type="button" @click="handleAccountAction">
+                {{ buttonClasses.text }}
+            </UiButton>
         </form>
     </div>
 </template>
