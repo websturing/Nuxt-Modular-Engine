@@ -44,24 +44,26 @@ const handleOpenChange = (isOpen: boolean, id: string) => {
             ? 'bg-red-50 border-red-300 text-red-700'
             : ''
     ]">
-            <div class="mt-0.5 shrink-0">
-                <Icon v-if="toast.variant === 'success'" name="lucide:check-circle-2" class="w-5 h-5 text-green-600" />
+            <div class="flex items-center gap-2">
+                <div class="mt-0.5 shrink-0">
+                    <Icon v-if="toast.variant === 'success'" name="lucide:check-circle-2"
+                        class="w-5 h-5 text-green-600" />
 
-                <Icon v-else-if="toast.variant === 'danger'" name="lucide:alert-circle"
-                    class="w-5 h-5 text-danger-600" />
+                    <Icon v-else-if="toast.variant === 'danger'" name="lucide:alert-circle"
+                        class="w-5 h-5 text-danger-600" />
 
-                <Icon v-else name="lucide:loader-2" class="w-5 h-5 text-black-500 animate-spin" />
+                    <Icon v-else name="lucide:loader-2" class="w-5 h-5 text-black-500 animate-spin" />
+                </div>
+
+                <div class="grid gap-1">
+                    <ToastTitle v-if="toast.title" class="text-sm font-semibold leading-none">
+                        {{ toast.title }}
+                    </ToastTitle>
+                    <ToastDescription v-if="toast.description" class="text-sm opacity-90">
+                        {{ toast.description }}
+                    </ToastDescription>
+                </div>
             </div>
-
-            <div class="grid gap-1">
-                <ToastTitle v-if="toast.title" class="text-sm font-semibold leading-none">
-                    {{ toast.title }}
-                </ToastTitle>
-                <ToastDescription v-if="toast.description" class="text-sm opacity-90">
-                    {{ toast.description }}
-                </ToastDescription>
-            </div>
-
             <ToastClose
                 class="absolute right-2 top-2 p-1 rounded-md text-black-400/70 hover:text-black-900 hover:bg-black-100/50 transition-colors">
                 <Icon name="lucide:x" class="w-4 h-4" />
