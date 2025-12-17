@@ -32,6 +32,7 @@ export default defineNuxtConfig({
   alias: {
     '@db': fileURLToPath(new URL('./server/db', import.meta.url)),
     '@module': fileURLToPath(new URL('./server/src/modules', import.meta.url)),
+    '@shared': fileURLToPath(new URL('./shared', import.meta.url)),
   },
   // ========================================
   // 🎨 CSS & STYLING

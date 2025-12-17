@@ -1,23 +1,67 @@
 import { verifyTokenService } from '@module/auth/auth.service';
 
 export default defineEventHandler(async (event) => {
-    const url = event.node.req.url;
-    // Skip endpoint public
-    if (url?.startsWith('/api/auth') || !url?.startsWith('/api')) return;
+    const url = event.node.req.url || '';
 
-    // Ambil Header Authorization
-    const authHeader = event.node.req.headers['authorization'];
-    if (!authHeader) {
-        event.context.user = null;
+    // 1. Bypass non-API requests
+    // We restrict protection to backend endpoints, excluding frontend assets (HTML/CSS/JS).
+    if (!url.startsWith('/api')) {
         return;
     }
 
-    // Format: "Bearer 1|s87asd6..."
-    const token = authHeader.split(' ')[1];
+    // 2. Public Route Whitelist
+    // Define endpoints accessible without authentication here.
+    const publicRoutes = [
+        '/api/auth/login',
+        '/api/auth/register',
+        // '/api/public/something'
+    ];
 
-    if (token) {
-        // Panggil Service verifikasi
+    // Logic: Permit access if the request URL matches any whitelisted public route.
+    const isPublic = publicRoutes.some(route => url.startsWith(route));
+
+    if (isPublic) {
+        return; // Access granted; token verification skipped.
+    }
+
+    // --- SECURITY CHECK INITIATED (PROTECTED ZONE) ---
+
+    // 3. Retrieve Authentication Token from Header
+    const authHeader = event.node.req.headers['authorization'];
+    const token = authHeader?.split(' ')[1]; // Format: "Bearer <token>"
+
+    if (!token) {
+        // ❌ Missing token? Deny access.
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized',
+            message: 'Authentication required. Please log in to access this resource.'
+        });
+    }
+
+    // 4. Verify Token validity
+    try {
         const user = await verifyTokenService(token);
-        event.context.user = user || null;
+
+        if (!user) {
+            // ❌ Invalid or expired token? Deny access.
+            throw createError({
+                statusCode: 401,
+                statusMessage: 'Unauthorized',
+                message: 'Your session has expired. Please log in again.'
+            });
+        }
+
+        // ✅ Token Valid! Attach user data to context.
+        // Make user data available for downstream controllers via event.context.user.
+        event.context.user = user;
+
+    } catch (error) {
+        // Token validation error
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized',
+            message: 'Invalid authentication token.'
+        });
     }
 });

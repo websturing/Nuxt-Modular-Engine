@@ -1,6 +1,6 @@
+import { loginSchema } from '@shared/schemas/auth';
 import { createError, defineEventHandler, getRequestHeader, readValidatedBody } from 'h3';
-import { loginSchema } from './auth.dto';
-import { loginService } from './auth.service'; // Pastikan import service sanctum yg baru
+import { loginService } from './auth.service';
 
 // --- 1. LOGIN ---
 export const loginController = defineEventHandler(async (event) => {
