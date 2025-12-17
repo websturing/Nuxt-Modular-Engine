@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm/relations";
-import { gls, assignmentLines, lines, users, attendances, attendanceLogs, cuttingGlColors, cuttingGlColorSizes, cuttingGlSummaries, employees, layingPlannings, leaderLineAssignments, devices, lineDevices, permissions, modelHasPermissions, roles, modelHasRoles, modules, modulePermissions, replacementHistories, replacementRequest, workflowSteps, workflowDefinitions, replacementRequestNote, roleHasPermissions, shifts, userShiftAssignments } from "./schema";
+import { assignmentLines, attendanceLogs, attendances, cuttingGlColors, cuttingGlColorSizes, cuttingGlSummaries, devices, employees, gls, layingPlannings, leaderLineAssignments, lineDevices, lines, modelHasPermissions, modelHasRoles, modulePermissions, modules, permissions, replacementHistories, replacementRequest, replacementRequestNote, roleHasPermissions, roles, shifts, users, userShiftAssignments, workflowDefinitions, workflowSteps } from "./schema";
 
-export const assignmentLinesRelations = relations(assignmentLines, ({one, many}) => ({
+export const assignmentLinesRelations = relations(assignmentLines, ({ one, many }) => ({
 	gl: one(gls, {
 		fields: [assignmentLines.glId],
 		references: [gls.id]
@@ -17,20 +17,20 @@ export const assignmentLinesRelations = relations(assignmentLines, ({one, many})
 	layingPlannings: many(layingPlannings),
 }));
 
-export const glsRelations = relations(gls, ({many}) => ({
+export const glsRelations = relations(gls, ({ many }) => ({
 	assignmentLines: many(assignmentLines),
 }));
 
-export const linesRelations = relations(lines, ({many}) => ({
+export const linesRelations = relations(lines, ({ many }) => ({
 	assignmentLines: many(assignmentLines),
 	leaderLineAssignments: many(leaderLineAssignments),
 	lineDevices: many(lineDevices),
 }));
 
-export const usersRelations = relations(users, ({many}) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
 	assignmentLines: many(assignmentLines),
 	attendances: many(attendances),
-	employees: many(employees),
+	employees: one(employees),
 	leaderLineAssignments: many(leaderLineAssignments),
 	replacementHistories: many(replacementHistories),
 	replacementRequests: many(replacementRequest),
@@ -38,14 +38,14 @@ export const usersRelations = relations(users, ({many}) => ({
 	userShiftAssignments: many(userShiftAssignments),
 }));
 
-export const attendanceLogsRelations = relations(attendanceLogs, ({one}) => ({
+export const attendanceLogsRelations = relations(attendanceLogs, ({ one }) => ({
 	attendance: one(attendances, {
 		fields: [attendanceLogs.attendanceId],
 		references: [attendances.id]
 	}),
 }));
 
-export const attendancesRelations = relations(attendances, ({one, many}) => ({
+export const attendancesRelations = relations(attendances, ({ one, many }) => ({
 	attendanceLogs: many(attendanceLogs),
 	user: one(users, {
 		fields: [attendances.userId],
@@ -53,14 +53,14 @@ export const attendancesRelations = relations(attendances, ({one, many}) => ({
 	}),
 }));
 
-export const cuttingGlColorSizesRelations = relations(cuttingGlColorSizes, ({one}) => ({
+export const cuttingGlColorSizesRelations = relations(cuttingGlColorSizes, ({ one }) => ({
 	cuttingGlColor: one(cuttingGlColors, {
 		fields: [cuttingGlColorSizes.cuttingGlColorId],
 		references: [cuttingGlColors.id]
 	}),
 }));
 
-export const cuttingGlColorsRelations = relations(cuttingGlColors, ({one, many}) => ({
+export const cuttingGlColorsRelations = relations(cuttingGlColors, ({ one, many }) => ({
 	cuttingGlColorSizes: many(cuttingGlColorSizes),
 	cuttingGlSummary: one(cuttingGlSummaries, {
 		fields: [cuttingGlColors.cuttingGlSummaryId],
@@ -68,25 +68,25 @@ export const cuttingGlColorsRelations = relations(cuttingGlColors, ({one, many})
 	}),
 }));
 
-export const cuttingGlSummariesRelations = relations(cuttingGlSummaries, ({many}) => ({
+export const cuttingGlSummariesRelations = relations(cuttingGlSummaries, ({ many }) => ({
 	cuttingGlColors: many(cuttingGlColors),
 }));
 
-export const employeesRelations = relations(employees, ({one}) => ({
+export const employeesRelations = relations(employees, ({ one }) => ({
 	user: one(users, {
 		fields: [employees.userId],
 		references: [users.id]
 	}),
 }));
 
-export const layingPlanningsRelations = relations(layingPlannings, ({one}) => ({
+export const layingPlanningsRelations = relations(layingPlannings, ({ one }) => ({
 	assignmentLine: one(assignmentLines, {
 		fields: [layingPlannings.assignmentLineId],
 		references: [assignmentLines.id]
 	}),
 }));
 
-export const leaderLineAssignmentsRelations = relations(leaderLineAssignments, ({one}) => ({
+export const leaderLineAssignmentsRelations = relations(leaderLineAssignments, ({ one }) => ({
 	line: one(lines, {
 		fields: [leaderLineAssignments.lineId],
 		references: [lines.id]
@@ -97,7 +97,7 @@ export const leaderLineAssignmentsRelations = relations(leaderLineAssignments, (
 	}),
 }));
 
-export const lineDevicesRelations = relations(lineDevices, ({one}) => ({
+export const lineDevicesRelations = relations(lineDevices, ({ one }) => ({
 	device: one(devices, {
 		fields: [lineDevices.deviceId],
 		references: [devices.id]
@@ -108,43 +108,43 @@ export const lineDevicesRelations = relations(lineDevices, ({one}) => ({
 	}),
 }));
 
-export const devicesRelations = relations(devices, ({many}) => ({
+export const devicesRelations = relations(devices, ({ many }) => ({
 	lineDevices: many(lineDevices),
 }));
 
-export const modelHasPermissionsRelations = relations(modelHasPermissions, ({one}) => ({
+export const modelHasPermissionsRelations = relations(modelHasPermissions, ({ one }) => ({
 	permission: one(permissions, {
 		fields: [modelHasPermissions.permissionId],
 		references: [permissions.id]
 	}),
 }));
 
-export const permissionsRelations = relations(permissions, ({many}) => ({
+export const permissionsRelations = relations(permissions, ({ many }) => ({
 	modelHasPermissions: many(modelHasPermissions),
 	roleHasPermissions: many(roleHasPermissions),
 }));
 
-export const modelHasRolesRelations = relations(modelHasRoles, ({one}) => ({
+export const modelHasRolesRelations = relations(modelHasRoles, ({ one }) => ({
 	role: one(roles, {
 		fields: [modelHasRoles.roleId],
 		references: [roles.id]
 	}),
 }));
 
-export const rolesRelations = relations(roles, ({many}) => ({
+export const rolesRelations = relations(roles, ({ many }) => ({
 	modelHasRoles: many(modelHasRoles),
 	roleHasPermissions: many(roleHasPermissions),
 	workflowSteps: many(workflowSteps),
 }));
 
-export const modulePermissionsRelations = relations(modulePermissions, ({one}) => ({
+export const modulePermissionsRelations = relations(modulePermissions, ({ one }) => ({
 	module: one(modules, {
 		fields: [modulePermissions.moduleId],
 		references: [modules.id]
 	}),
 }));
 
-export const modulesRelations = relations(modules, ({one, many}) => ({
+export const modulesRelations = relations(modules, ({ one, many }) => ({
 	modulePermissions: many(modulePermissions),
 	module: one(modules, {
 		fields: [modules.parentId],
@@ -156,7 +156,7 @@ export const modulesRelations = relations(modules, ({one, many}) => ({
 	}),
 }));
 
-export const replacementHistoriesRelations = relations(replacementHistories, ({one}) => ({
+export const replacementHistoriesRelations = relations(replacementHistories, ({ one }) => ({
 	user: one(users, {
 		fields: [replacementHistories.actionBy],
 		references: [users.id]
@@ -171,7 +171,7 @@ export const replacementHistoriesRelations = relations(replacementHistories, ({o
 	}),
 }));
 
-export const replacementRequestRelations = relations(replacementRequest, ({one, many}) => ({
+export const replacementRequestRelations = relations(replacementRequest, ({ one, many }) => ({
 	replacementHistories: many(replacementHistories),
 	user: one(users, {
 		fields: [replacementRequest.createdBy],
@@ -188,7 +188,7 @@ export const replacementRequestRelations = relations(replacementRequest, ({one, 
 	replacementRequestNotes: many(replacementRequestNote),
 }));
 
-export const workflowStepsRelations = relations(workflowSteps, ({one, many}) => ({
+export const workflowStepsRelations = relations(workflowSteps, ({ one, many }) => ({
 	replacementHistories: many(replacementHistories),
 	replacementRequests: many(replacementRequest),
 	role: one(roles, {
@@ -201,12 +201,12 @@ export const workflowStepsRelations = relations(workflowSteps, ({one, many}) => 
 	}),
 }));
 
-export const workflowDefinitionsRelations = relations(workflowDefinitions, ({many}) => ({
+export const workflowDefinitionsRelations = relations(workflowDefinitions, ({ many }) => ({
 	replacementRequests: many(replacementRequest),
 	workflowSteps: many(workflowSteps),
 }));
 
-export const replacementRequestNoteRelations = relations(replacementRequestNote, ({one}) => ({
+export const replacementRequestNoteRelations = relations(replacementRequestNote, ({ one }) => ({
 	user: one(users, {
 		fields: [replacementRequestNote.createdBy],
 		references: [users.id]
@@ -217,7 +217,7 @@ export const replacementRequestNoteRelations = relations(replacementRequestNote,
 	}),
 }));
 
-export const roleHasPermissionsRelations = relations(roleHasPermissions, ({one}) => ({
+export const roleHasPermissionsRelations = relations(roleHasPermissions, ({ one }) => ({
 	permission: one(permissions, {
 		fields: [roleHasPermissions.permissionId],
 		references: [permissions.id]
@@ -228,7 +228,7 @@ export const roleHasPermissionsRelations = relations(roleHasPermissions, ({one})
 	}),
 }));
 
-export const userShiftAssignmentsRelations = relations(userShiftAssignments, ({one}) => ({
+export const userShiftAssignmentsRelations = relations(userShiftAssignments, ({ one }) => ({
 	shift: one(shifts, {
 		fields: [userShiftAssignments.shiftId],
 		references: [shifts.id]
@@ -239,6 +239,6 @@ export const userShiftAssignmentsRelations = relations(userShiftAssignments, ({o
 	}),
 }));
 
-export const shiftsRelations = relations(shifts, ({many}) => ({
+export const shiftsRelations = relations(shifts, ({ many }) => ({
 	userShiftAssignments: many(userShiftAssignments),
 }));

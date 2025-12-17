@@ -25,11 +25,15 @@ export const getUserByIdRepo = async (id: number) => {
 
 // Get By Email (untuk cek duplikat)
 export const getUserByEmailRepo = async (email: string) => {
-    const result = await db.select()
-        .from(users)
-        .where(eq(users.email, email))
-        .limit(1);
-    return result[0];
+    const result = await db.query.users.findFirst(
+        {
+            where: eq(users.email, email),
+            with: {
+                employees: true,
+            }
+        }
+    );
+    return result;
 };
 
 

@@ -1,7 +1,7 @@
+import type { LoginInput } from '@shared/schemas/auth';
 import { compare } from 'bcryptjs';
 import { generateSanctumToken, hashToken } from '../../../utils/sanctum';
 import { getUserByEmailRepo, getUserByIdRepo } from '../../modules/users/user.repository';
-import type { LoginInput } from './auth.dto';
 import { createSanctumTokenRepo, findSanctumTokenRepo } from './auth.repository';
 
 export const loginService = async (input: LoginInput) => {
@@ -22,7 +22,7 @@ export const loginService = async (input: LoginInput) => {
     const finalToken = `${tokenId}|${plainTextToken}`;
 
     return {
-        user: { id: user.id, name: user.name, email: user.email },
+        user: user,
         token: finalToken
     };
 };
