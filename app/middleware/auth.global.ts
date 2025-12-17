@@ -1,29 +1,17 @@
+
 import { useAuthStore } from '~/stores/auth';
 
 export default defineNuxtRouteMiddleware((to, from) => {
     const authStore = useAuthStore()
-
-
-    // --- LOG  ---
-    if (process.client) {
-        console.log('--- DEBUG MIDDLEWARE ---')
-        console.log('Halaman Tujuan:', to.path)
-        console.log('Isi Token di Store:', authStore.token)
-        console.log('Status isAuthenticated:', authStore.isAuthenticated)
-    }
-    // -------------------------
-
-    const publicRoutes = ['/login']
-
-
+    const publicRoutes = ['/login', '/register', '/forgot-password']
     const isPublicRoute = publicRoutes.includes(to.path)
+    const token = authStore.token
 
-
-    if (!authStore.token && !isPublicRoute) {
+    if (!token && !isPublicRoute) {
         return navigateTo('/login')
     }
 
-    if (authStore.token && isPublicRoute) {
+    if (token && isPublicRoute) {
         return navigateTo('/dashboard')
     }
 })

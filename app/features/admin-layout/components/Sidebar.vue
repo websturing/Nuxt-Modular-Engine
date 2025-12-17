@@ -19,6 +19,8 @@ const sidebarRef = ref(null);
 const { isSidebarOpen, closeSidebar } = useAdminLayout();
 const existingRoutes = ref<string[]>([])
 
+const { menus } = useAuth()
+
 onMounted(() => {
     existingRoutes.value = router.getRoutes().map(r => String(r.name))
 })
@@ -34,201 +36,9 @@ onClickOutside(sidebarRef, () => {
     ignore: ['.js-sidebar-toggle']
 });
 
-const menu: MenuItem[] = [
-    {
-        id: 1,
-        name: "Dashboard",
-        slug: "dashboard",
-        icon: "home-2-broken",
-        permissions: [
-            { action: "read", permission_name: "dashboard.read" }
-        ],
-        children: []
-    },
-    {
-        id: 16,
-        name: "Operation Planning",
-        slug: "operation-planning",
-        icon: "OperationsField",
-        permissions: [
-            { action: "create", permission_name: "operation-planning.create" },
-            { action: "read", permission_name: "operation-planning.read" },
-            { action: "update", permission_name: "operation-planning.update" },
-            { action: "delete", permission_name: "operation-planning.delete" },
-            { action: "upload", permission_name: "operation-planning.upload" },
-            { action: "download", permission_name: "operation-planning.download" }
-        ],
-        children: [
-            {
-                id: 12,
-                name: "GL Number",
-                slug: "gls",
-                icon: "documents-broken",
-                permissions: [
-                    { action: "create", permission_name: "gls.create" },
-                    { action: "read", permission_name: "gls.read" },
-                    { action: "update", permission_name: "gls.update" },
-                    { action: "delete", permission_name: "gls.delete" },
-                    { action: "upload", permission_name: "gls.upload" },
-                    { action: "download", permission_name: "gls.download" }
-                ],
-                children: []
-            },
-            {
-                id: 17,
-                name: "Leaders",
-                slug: "leaders",
-                icon: "shield-user-broken",
-                permissions: [
-                    { action: "create", permission_name: "leaders.create" },
-                    { action: "read", permission_name: "leaders.read" },
-                    { action: "update", permission_name: "leaders.update" },
-                    { action: "delete", permission_name: "leaders.delete" },
-                    { action: "upload", permission_name: "leaders.upload" },
-                    { action: "download", permission_name: "leaders.download" }
-                ],
-                children: []
-            }
-        ]
-    },
-    {
-        id: 3,
-        name: "Transfers",
-        slug: "transfers",
-        icon: "Movement",
-        permissions: [
-            { action: "read", permission_name: "transfers.read" },
-            { action: "create", permission_name: "transfers.create" },
-            { action: "update", permission_name: "transfers.update" },
-            { action: "delete", permission_name: "transfers.delete" },
-            { action: "upload", permission_name: "transfers.upload" },
-            { action: "download", permission_name: "transfers.download" }
-        ],
-        children: [
-            {
-                id: 11,
-                name: "Stock In",
-                slug: "stock-ins",
-                icon: "qr-code-broken",
-                permissions: [
-                    { action: "create", permission_name: "stock-ins.create" },
-                    { action: "read", permission_name: "stock-ins.read" },
-                    { action: "update", permission_name: "stock-ins.update" },
-                    { action: "delete", permission_name: "stock-ins.delete" },
-                    { action: "upload", permission_name: "stock-ins.upload" },
-                    { action: "download", permission_name: "stock-ins.download" }
-                ],
-                children: []
-            },
-            {
-                id: 8,
-                name: "Stock Out",
-                slug: "stockout",
-                icon: "cash-out-broken",
-                permissions: [
-                    { action: "read", permission_name: "stockout.read" },
-                    { action: "create", permission_name: "stockout.create" },
-                    { action: "update", permission_name: "stockout.update" },
-                    { action: "delete", permission_name: "stockout.delete" },
-                    { action: "upload", permission_name: "stockout.upload" },
-                    { action: "download", permission_name: "stockout.download" }
-                ],
-                children: []
-            },
-            {
-                id: 9,
-                name: "Defect",
-                slug: "defect",
-                icon: "shield-warning-bold",
-                permissions: [
-                    { action: "read", permission_name: "defect.read" },
-                    { action: "create", permission_name: "defect.create" },
-                    { action: "update", permission_name: "defect.update" },
-                    { action: "delete", permission_name: "defect.delete" },
-                    { action: "upload", permission_name: "defect.upload" },
-                    { action: "download", permission_name: "defect.download" }
-                ],
-                children: []
-            }
-        ]
-    },
-    {
-        id: 13,
-        name: "Lines",
-        slug: "lines",
-        icon: "turntable-minimalistic-bold",
-        permissions: [
-            { action: "create", permission_name: "lines.create" },
-            { action: "read", permission_name: "lines.read" },
-            { action: "update", permission_name: "lines.update" },
-            { action: "delete", permission_name: "lines.delete" },
-            { action: "upload", permission_name: "lines.upload" },
-            { action: "download", permission_name: "lines.download" }
-        ],
-        children: []
-    },
-    {
-        id: 20,
-        name: "Replacements",
-        slug: "replacement-title",
-        icon: "Forms",
-        permissions: [
-            { action: "read", permission_name: "replacement-title.read" },
-            { action: "create", permission_name: "replacement-title.create" },
-            { action: "update", permission_name: "replacement-title.update" },
-            { action: "delete", permission_name: "replacement-title.delete" },
-            { action: "upload", permission_name: "replacement-title.upload" },
-            { action: "download", permission_name: "replacement-title.download" }
-        ],
-        children: [
-            {
-                id: 21,
-                name: "Tracking Ticket",
-                slug: "replacement-tracking",
-                icon: "point-on-map-perspective-bold-duotone",
-                permissions: [
-                    { action: "create", permission_name: "replacement-tracking.create" },
-                    { action: "read", permission_name: "replacement-tracking.read" },
-                    { action: "update", permission_name: "replacement-tracking.update" }
-                ],
-                children: []
-            },
-            {
-                id: 18,
-                name: "Ticket Request",
-                slug: "replacement",
-                icon: "chat-unread-bold",
-                permissions: [
-                    { action: "create", permission_name: "replacement.create" },
-                    { action: "read", permission_name: "replacement.read" },
-                    { action: "update", permission_name: "replacement.update" },
-                    { action: "delete", permission_name: "replacement.delete" },
-                    { action: "upload", permission_name: "replacement.upload" },
-                    { action: "download", permission_name: "replacement.download" }
-                ],
-                children: []
-            },
-            {
-                id: 19,
-                name: "Approval",
-                slug: "replacement-approval",
-                icon: "check-read-bold-duotone",
-                permissions: [
-                    { action: "create", permission_name: "replacement-approval.create" },
-                    { action: "read", permission_name: "replacement-approval.read" },
-                    { action: "update", permission_name: "replacement-approval.update" },
-                    { action: "delete", permission_name: "replacement-approval.delete" },
-                    { action: "upload", permission_name: "replacement-approval.upload" },
-                    { action: "download", permission_name: "replacement-approval.download" }
-                ],
-                children: []
-            }
-        ]
-    }
-]
 
 const processedMenu = computed(() =>
-    menu.map(item => ({
+    menus.value.map(item => ({
         ...item,
         exists: routeExists(item.slug),
         children: item.children?.map(child => ({
@@ -253,6 +63,7 @@ const { openLogoutDialog } = useUiStore()
         <div v-if="isSidebarOpen" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity">
         </div>
     </Transition>
+    {{ menus }}
     <aside ref="sidebarRef" :class="[
         'fixed left-0 bottom-0 w-64 z-50 transition-transform duration-300 p-1',
         'top-12',
