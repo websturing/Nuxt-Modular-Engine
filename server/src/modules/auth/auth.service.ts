@@ -2,6 +2,7 @@ import type { LoginInput } from '@shared/schemas/auth';
 import { compare } from 'bcryptjs';
 import { generateSanctumToken, hashToken } from '../../../utils/sanctum';
 import { getUserByEmailRepo, getUserByIdRepo } from '../../modules/users/user.repository';
+import { getUserPermissionsRepo, getUserRolesRepo } from './acl.repository';
 import { createSanctumTokenRepo, findSanctumTokenRepo } from './auth.repository';
 
 export const loginService = async (input: LoginInput) => {
@@ -11,6 +12,8 @@ export const loginService = async (input: LoginInput) => {
         throw new Error('Email atau Password salah');
     }
 
+    const userRoles = await getUserRolesRepo(user.id);
+    const userPermissions = await getUserPermissionsRepo(user.id);
     // 2. Generate Token a la Sanctum
     const { plainTextToken, hashedToken } = generateSanctumToken();
 
@@ -23,6 +26,8 @@ export const loginService = async (input: LoginInput) => {
 
     return {
         user: user,
+        roles: userRoles,
+        permissions: userPermissions,
         token: finalToken
     };
 };
