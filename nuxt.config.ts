@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-15',
@@ -27,6 +28,10 @@ export default defineNuxtConfig({
     },
   },
 
+  alias: {
+    '@db': fileURLToPath(new URL('./server/db', import.meta.url)),
+    '@module': fileURLToPath(new URL('./server/src/modules', import.meta.url)),
+  },
   // ========================================
   // 🎨 CSS & STYLING
   // ========================================

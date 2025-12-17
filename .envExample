@@ -1,0 +1,5 @@
+DATABASE_URL="mysql://sewing_user_dev:kai@2025@172.18.78.66:3306/sewing_dev"
+API_BASE_URL=http://api.sewing.localhost/api
+NUXT_PUBLIC_TIMEZONE=Asia/Jakarta
+NUXT_PUBLIC_TIME_FORMAT=HH:mm:ss
+NUXT_PUBLIC_DATE_FORMAT=F, dd YYYY
