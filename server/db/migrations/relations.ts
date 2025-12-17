@@ -27,16 +27,7 @@ export const linesRelations = relations(lines, ({ many }) => ({
 	lineDevices: many(lineDevices),
 }));
 
-export const usersRelations = relations(users, ({ many, one }) => ({
-	assignmentLines: many(assignmentLines),
-	attendances: many(attendances),
-	employees: one(employees),
-	leaderLineAssignments: many(leaderLineAssignments),
-	replacementHistories: many(replacementHistories),
-	replacementRequests: many(replacementRequest),
-	replacementRequestNotes: many(replacementRequestNote),
-	userShiftAssignments: many(userShiftAssignments),
-}));
+
 
 export const attendanceLogsRelations = relations(attendanceLogs, ({ one }) => ({
 	attendance: one(attendances, {
