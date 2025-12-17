@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import fs from 'fs'
 import path from 'path'
-export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
 
+export default defineNuxtConfig({
+  compatibilityDate: '2024-07-15',
+  devtools: { enabled: true },
 
   // ========================================
   // 📦 MODULES
@@ -19,12 +19,11 @@ export default defineNuxtConfig({
   ],
 
   piniaPersistedstate: {
-    storage: 'cookies', // Set default ke cookies
+    storage: 'cookies',
     cookieOptions: {
-      sameSite: 'lax', // Penting untuk CSRF protection
-      // Secure: true hanya aktif di HTTPS (Production), di localhost (HTTP) jadi false biar gak error
+      sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // Token bertahan 7 hari (opsional, sesuaikan kebutuhan)
+      maxAge: 60 * 60 * 24 * 7,
     },
   },
 
@@ -32,9 +31,9 @@ export default defineNuxtConfig({
   // 🎨 CSS & STYLING
   // ========================================
   css: [
-    '~/assets/css/variables.css', // 1. Design Tokens (Primitives & Semantics)
-    '~/assets/css/main.css',       // 2. Global Styles
-    '~/assets/css/utilities.css'       // 2. Global Styles
+    '~/assets/css/variables.css',
+    '~/assets/css/main.css',
+    '~/assets/css/utilities.css'
   ],
 
   tailwindcss: {
@@ -56,7 +55,7 @@ export default defineNuxtConfig({
     dirs: [
       'composables',
       'composables/core',
-      'features/*/composables',
+      'features/*/composables', // Auto import useSomething() dari folder feature
       'utils',
     ],
   },
@@ -67,12 +66,12 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components/ui', prefix: 'Ui' },
     { path: '~/components/shared', prefix: '' },
-    // Auto-import dari modules
+    // Auto-import components dari feature tanpa prefix folder, tapi file harus unik namanya
     { path: '~/features', prefix: '', pathPrefix: false, extensions: ['vue'] },
   ],
 
   // ========================================
-  // 🌐 RUNTIME CONFIG (API, ENV)
+  // 🌐 RUNTIME CONFIG
   // ========================================
   runtimeConfig: {
     apiSecret: process.env.API_SECRET,
@@ -83,13 +82,17 @@ export default defineNuxtConfig({
       dateFormat: process.env.NUXT_PUBLIC_DATE_FORMAT || 'YYYY-MM-DD'
     }
   },
+
+  // ========================================
+  // 🚦 ROUTING LOGIC (FEATURE-BASED)
+  // ========================================
   pages: true,
   hooks: {
     'pages:extend'(pages) {
-      // [PENTING] 2. Gunakan process.cwd() agar path-nya akurat dari root project
+      // Pastikan path resolve dari ROOT project (process.cwd())
       const featuresDir = path.resolve(process.cwd(), 'app/features')
 
-      console.log('🏁 START SCANNING FEATURES:', featuresDir) // Log Debug
+      // console.log('🏁 START SCANNING FEATURES:', featuresDir)
 
       if (fs.existsSync(featuresDir)) {
         fs.readdirSync(featuresDir).forEach((featureName) => {
@@ -100,53 +103,39 @@ export default defineNuxtConfig({
               if (file.endsWith('.vue')) {
                 const fileNameOriginal = file.replace('.vue', '')
 
-                // Regex: Hapus "Page" atau "Pages" di akhir (Case Insensitive)
+                // Hapus kata "Page" di akhir nama file (misal: StockInPage -> StockIn)
                 const cleanName = fileNameOriginal.replace(/Pages?$/i, '').toLowerCase()
 
-                let routePath = ''
+                // Logic Penentuan URL dan Route Name
+                let routePath = `/${featureName}` // Default: /stock-in
+                let routeName = featureName       // Default Name: stock-in
 
-                // Logika Routing
-                if (cleanName === 'index' || cleanName === '') {
-                  routePath = `/${featureName}`
-                } else {
-                  routePath = `/${cleanName}`
+                // Jika file BUKAN 'index.vue', tambahkan sebagai sub-path
+                if (cleanName !== 'index' && cleanName !== '') {
+                  routePath += `/${cleanName}`        // Hasil: /stock-in/create
+                  routeName += `-${cleanName}`        // Hasil: stock-in-create
                 }
 
-                // Push ke Router
+                // Push rute ke Nuxt
                 pages.push({
-                  name: cleanName,
+                  name: routeName,
                   path: routePath,
                   file: path.resolve(featurePagesDir, file)
                 })
 
-                // [PENTING] 3. Bukti Registrasi
-                console.log(`✅ ROUTE ADDED: ${routePath}  -->  ${featureName}/pages/${file}`)
+                console.log(`✅ ROUTE: ${routePath.padEnd(25)} name: ${routeName}`)
               }
             })
           }
         })
-      } else {
-        console.log('⚠️  Folder "features" tidak ditemukan di root!')
       }
     }
   },
 
-  // ========================================
-  // 📁 DIRECTORY CONFIGURATION
-  // ========================================
-  // Nuxt 4 sudah default ke folder `app/`
-  // Tidak perlu override kecuali custom structure
-
-  // ========================================
-  // 🔍 DEV SERVER
-  // ========================================
   devServer: {
-    port: 3000,           // Dev server port
-    host: 'localhost'     // atau '0.0.0.0' untuk network access
+    port: 3000,
+    host: 'localhost'
   },
 
-  // ========================================
-  // 🚀 SSR / CSR MODE
-  // ========================================
-  ssr: true,              // true = SSR, false = SPA mode
+  ssr: true,
 })

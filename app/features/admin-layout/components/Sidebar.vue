@@ -77,6 +77,8 @@ onClickOutside(sidebarRef, () => {
                                         ]" active-class="bg-white/10 text-white !text-white font-medium shadow-sm">
                                         <Icon :name="child.icon" size="18" />
                                         <span>{{ child.name }}</span>
+                                        <span v-if="!item.exists"
+                                            class="ml-auto text-[10px] bg-red-500 px-1 rounded">404</span>
                                     </component>
                                 </template>
                             </div>
