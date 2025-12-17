@@ -1,9 +1,10 @@
-import { LoginResponseSchema, type LoginForm, type Permissions, type User } from '~/schemas/auth'
+import { LoginResponseSchema, type LoginForm, type Menu, type Permissions, type User } from '~/schemas/auth'
 
 const defaultState = {
     user: null as User | null,
     token: null as string | null,
-    permissions: [] as Permissions
+    permissions: [] as Permissions,
+    menus: [] as Menu
 }
 
 
@@ -13,11 +14,9 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<typeof defaultState.user>(defaultState.user)
     const token = ref<typeof defaultState.token>(defaultState.token)
     const permissions = ref<typeof defaultState.permissions>(defaultState.permissions)
+    const menus = ref<typeof defaultState.menus>(defaultState.menus)
 
     const isAuthenticated = computed(() => !!token.value)
-    const config = useRuntimeConfig()
-    const baseURL = config.public.apiBase
-    const module = 'auth'
 
 
     // stores/auth.ts
@@ -50,10 +49,10 @@ export const useAuthStore = defineStore('auth', () => {
 
             token.value = result.accessToken;
             user.value = result.user;
+            menus.value = result.menu;
             permissions.value = result.permissions;
 
-            const cookieToken = useCookie('auth_token');
-            cookieToken.value = result.accessToken;
+
 
             return {
                 message: parsed.data.message,
@@ -105,6 +104,7 @@ export const useAuthStore = defineStore('auth', () => {
         logout,
         fetchUser,
         user,
+        menus,
         token,
         permissions,
         isAuthenticated
