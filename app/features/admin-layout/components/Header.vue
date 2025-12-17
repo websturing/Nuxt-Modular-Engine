@@ -2,8 +2,11 @@
 const { toggleSidebar } = useAdminLayout();
 const { dateTime } = useClientTime()
 
-const user = {
-    name: 'admin@gmail.com',
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
+
+const profile = {
+    name: user.value?.email || 'Profile',
     photo: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
 }
 
@@ -67,7 +70,7 @@ const { openLogoutDialog } = useUiStore()
             <div>
                 <UiButton icon="solar:bell-bing-bold" label="" variant="ghost" />
             </div>
-            <UiDropdown :label="user.name" :avatar="user.photo">
+            <UiDropdown :label="profile.name" :avatar="profile.photo">
                 <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider z-100">
                     Akun Saya
                 </div>

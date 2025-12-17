@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-
+const { user } = storeToRefs(authStore)
 definePageMeta({
     layout: 'admin'
+})
+
+useHead({
+    title: user.value?.email || 'Profile'
 })
 
 // Fetch fresh user data on page load
