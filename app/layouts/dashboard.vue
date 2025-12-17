@@ -44,6 +44,6 @@ onMounted(() => {
 
 <template>
     <div>
-        Dashboard
+        Dashboard asdad
     </div>
 </template>

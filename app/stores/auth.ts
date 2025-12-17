@@ -76,12 +76,15 @@ export const useAuthStore = defineStore('auth', () => {
     async function fetchUser() {
         if (!token.value) return; // Guard clause
         try {
-            const { data, error } = await useApi('auth/me');
+            const { data, error } = await useApi('auth/profile');
+
             if (error.value) throw error.value;
 
             const result = data.value as any;
             if (result?.data) {
-                user.value = result.data;
+                user.value = result.data.user;
+                permissions.value = result.data.permissions;
+                menus.value = result.data.menu;
             }
         } catch (err) {
             console.error('Fetch user failed', err);

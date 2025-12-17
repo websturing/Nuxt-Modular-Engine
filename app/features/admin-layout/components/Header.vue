@@ -5,10 +5,12 @@ const { dateTime } = useClientTime()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
 
-const profile = {
-    name: user.value?.email || 'Profile',
-    photo: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
-}
+const profile = computed(() => {
+    return {
+        name: user.value?.email || 'Profile',
+        photo: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
+    }
+})
 
 const { openLogoutDialog } = useUiStore()
 
@@ -70,31 +72,39 @@ const { openLogoutDialog } = useUiStore()
             <div>
                 <UiButton icon="solar:bell-bing-bold" label="" variant="ghost" />
             </div>
-            <UiDropdown :label="profile.name" :avatar="profile.photo">
-                <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider z-100">
-                    Akun Saya
-                </div>
+            <ClientOnly>
+                <UiDropdown :label="profile.name" :avatar="profile.photo">
+                    <div class="px-2 py-1.5 text-xs text-gray-400 font-semibold uppercase tracking-wider z-100">
+                        Akun Saya
+                    </div>
 
-                <NuxtLink to="/profile"
-                    class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
-                    <Icon name="solar:user-id-broken" class="w-4 h-4" />
-                    Profile
-                </NuxtLink>
+                    <NuxtLink to="/profile"
+                        class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
+                        <Icon name="solar:user-id-broken" class="w-4 h-4" />
+                        Profile
+                    </NuxtLink>
 
-                <NuxtLink to="/settings"
-                    class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
-                    <Icon name="solar:settings-broken" class="w-4 h-4" />
-                    Settings
-                </NuxtLink>
+                    <NuxtLink to="/settings"
+                        class="flex items-center gap-2 px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer">
+                        <Icon name="solar:settings-broken" class="w-4 h-4" />
+                        Settings
+                    </NuxtLink>
 
-                <div class="h-px bg-gray-100 my-1"></div>
+                    <div class="h-px bg-gray-100 my-1"></div>
 
-                <button @click="openLogoutDialog"
-                    class="w-full flex items-center gap-2 px-2 py-2 text-sm text-red-600 hover:bg-red-50 rounded cursor-pointer">
-                    <Icon name="solar:logout-2-broken" class="w-4 h-4" />
-                    Logout
-                </button>
-            </UiDropdown>
+                    <button @click="openLogoutDialog"
+                        class="w-full flex items-center gap-2 px-2 py-2 text-sm text-red-600 hover:bg-red-50 rounded cursor-pointer">
+                        <Icon name="solar:logout-2-broken" class="w-4 h-4" />
+                        Logout
+                    </button>
+                </UiDropdown>
+                <template #fallback>
+                    <div class="flex gap-2 items-center">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                        <div class="w-20 h-6 bg-gray-200"></div>
+                    </div>
+                </template>
+            </ClientOnly>
         </div>
 
     </div>
