@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import { NuxtLink } from '#components'
+import { NuxtLink } from '#components';
 interface Permission {
     action: string
     permission_name: string
 }
 
-interface MenuItem {
-    id: number
-    name: string
-    slug: string
-    icon: string
-    permissions: Permission[]
-    children: MenuItem[]
-}
 
 const router = useRouter()
 const sidebarRef = ref(null);
@@ -63,7 +55,6 @@ const { openLogoutDialog } = useUiStore()
         <div v-if="isSidebarOpen" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity">
         </div>
     </Transition>
-    {{ menus }}
     <aside ref="sidebarRef" :class="[
         'fixed left-0 bottom-0 w-64 z-50 transition-transform duration-300 p-1',
         'top-12',
