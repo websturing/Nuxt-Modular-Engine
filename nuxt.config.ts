@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   // 📦 MODULES
   // ========================================
   modules: [
+    'nuxt-auth-utils',
     '@vueuse/nuxt',
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
