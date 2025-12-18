@@ -24,13 +24,19 @@ export const loginService = async (input: LoginInput) => {
     // Ini standar Sanctum biar frontend Laravel/Nuxt gampang bacanya
     const finalToken = `${tokenId}|${plainTextToken}`;
 
+
     return {
         user: user,
         roles: userRoles,
         permissions: userPermissions,
-        token: finalToken
+        token: finalToken,
     };
 };
+
+export const getProfileService = async (userId: number) => {
+    const user = await getUserByIdRepo(userId);
+    return user;
+}
 
 export const verifyTokenService = async (bearerToken: string) => {
     // Format token: "1|abcdefg..."
