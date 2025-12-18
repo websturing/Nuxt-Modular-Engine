@@ -1,7 +1,7 @@
 import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
-    schema: "./server/db/schema.ts", // File ini nanti akan DITULIS OTOMATIS oleh Drizzle
+    schema: "./server/db/schemas",
     out: "./server/db/migrations",
     dialect: 'mysql',
     dbCredentials: {

@@ -2,10 +2,7 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 
-// 1. Import Schema dan Relations hasil generate tadi
-import * as relations from './migrations/relations';
-import { usersRelations } from './migrations/relations/users';
-import * as schema from './migrations/schema';
+import * as schema from './schemas';
 
 const connection = mysql.createPool({
     uri: process.env.DATABASE_URL,
@@ -14,9 +11,7 @@ const connection = mysql.createPool({
     queueLimit: 0
 });
 
-// 2. Masukkan keduanya ke dalam config 'schema'
-// Kita pakai spread operator (...) untuk menggabungkan objectnya
 export const db = drizzle(connection, {
-    schema: { ...schema, ...relations, usersRelations },
+    schema,
     mode: 'default'
 });

@@ -74,7 +74,7 @@ subFolders.forEach((folder) => {
     // --- 3. PAGES ---
     else if (folder === 'pages') {
         // PENTING: Selalu buat index.vue agar URL-nya bersih (Example: /stock-in)
-        const fileName = 'index.vue';
+        const fileName = `${featureNamePascal}Page.vue`;
         const content =
             `<script setup lang="ts">
 // Page: /${featureName}
