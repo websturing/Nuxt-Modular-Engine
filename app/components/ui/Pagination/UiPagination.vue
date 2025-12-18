@@ -1,45 +1,45 @@
-<script setup lang="ts">
-import {
-    PaginationEllipsis,
-    PaginationFirst,
-    PaginationLast,
-    PaginationList,
-    PaginationListItem,
-    PaginationNext,
-    PaginationPrev,
-    PaginationRoot,
-} from 'reka-ui'
-import type { PaginationMeta } from '@shared/schemas/pagination'
+    <script setup lang="ts">
+    import type { PaginationMeta } from '@shared/schemas/pagination'
+    import {
+        PaginationEllipsis,
+        PaginationFirst,
+        PaginationLast,
+        PaginationList,
+        PaginationListItem,
+        PaginationNext,
+        PaginationPrev,
+        PaginationRoot,
+    } from 'reka-ui'
 
-interface Props {
-    page?: number
-    total?: number
-    perPage?: number
-    meta?: PaginationMeta
-    siblingCount?: number
-    showEdges?: boolean
-}
+    interface Props {
+        page?: number
+        total?: number
+        perPage?: number
+        meta?: PaginationMeta
+        siblingCount?: number
+        showEdges?: boolean
+    }
 
-const props = withDefaults(defineProps<Props>(), {
-    page: 1,
-    total: 0,
-    perPage: 10,
-    meta: undefined,
-    siblingCount: 1,
-    showEdges: true,
-})
+    const props = withDefaults(defineProps<Props>(), {
+        page: 1,
+        total: 0,
+        perPage: 10,
+        meta: undefined,
+        siblingCount: 1,
+        showEdges: true,
+    })
 
-const emit = defineEmits<{
-    'update:page': [value: number]
-}>()
+    const emit = defineEmits<{
+        'update:page': [value: number]
+    }>()
 
-const currentPage = computed({
-    get: () => props.page,
-    set: (val) => emit('update:page', val),
-})
+    const currentPage = computed({
+        get: () => props.page,
+        set: (val) => emit('update:page', val),
+    })
 
-const resolvedTotal = computed(() => props.meta?.total ?? props.total)
-const resolvedPerPage = computed(() => props.meta?.perPage ?? props.perPage)
+    const resolvedTotal = computed(() => props.meta?.total ?? props.total)
+    const resolvedPerPage = computed(() => props.meta?.perPage ?? props.perPage)
 </script>
 
 <template>
@@ -61,7 +61,7 @@ const resolvedPerPage = computed(() => props.meta?.perPage ?? props.perPage)
 
                 <template v-for="(page, index) in items">
                     <PaginationListItem v-if="page.type === 'page'" :key="index" :value="page.value"
-                        class="w-8 h-8 flex items-center justify-center rounded-md border text-sm font-medium transition-colors data-[selected]:bg-primary-600 data-[selected]:text-white data-[selected]:border-primary-600 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 focus:shadow focus:ring-1 focus:ring-primary-500 focus:outline-none">
+                        class="w-8 h-8 flex items-center justify-center rounded-md border text-sm font-medium transition-colors data-[selected]:bg-primary-100 data-[selected]:text-white data-[selected]:border-primary-600 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 focus:shadow focus:ring-1 focus:ring-primary-500 focus:outline-none">
                         {{ page.value }}
                     </PaginationListItem>
 

@@ -15,16 +15,14 @@ await fetchModules()
 
 <template>
 
-  <div class="space-y-10">
+  <div>
     <UiHeaderPage title="Permission Management"
       description="Define and manage user roles, granular access levels, and organizational security policies efficiently"
       :breadcrumbs="[{ label: 'Permission Management' }]" />
 
-    <div class="space-y-4">
+    <div class="space-y-4 mt-10">
 
       <ModuleTable />
-      <ModuleTable />
-
     </div>
   </div>
 </template>
