@@ -1,4 +1,4 @@
-<script lang="ts"></script>
+<script setup lang="ts"></script>
 
 <template>
     <div class="space-y-1 sticky top-5 backdrop-blur-lg">
