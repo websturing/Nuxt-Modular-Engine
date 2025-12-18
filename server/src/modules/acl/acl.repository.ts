@@ -48,21 +48,20 @@ export const getUserRolesRepo = async (userId: number) => {
 
 
 export const moduleRepository = {
-    async findMany(params: { skip: number; take: number }) {
+    async findMany(params: { offset: number; limit: number }) {
         return await db.select()
             .from(modules)
-            .limit(params.take)   // Drizzle pakai limit
-            .offset(params.skip)  // Drizzle pakai offset
-            .orderBy(desc(modules.createdAt)) // Import 'desc'
+            .limit(params.limit)
+            .offset(params.offset)
+            .orderBy(desc(modules.createdAt))
     },
 
-    // 2. Hitung Total Data
+
     async count() {
-        // Drizzle tidak punya .count() langsung, harus select count
         const [result] = await db
             .select({ value: count() })
             .from(modules)
 
-        return result.value // Mengembalikan number
+        return result?.value || 0
     }
 }
