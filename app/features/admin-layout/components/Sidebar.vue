@@ -60,9 +60,9 @@ onClickOutside(sidebarRef, () => {
 
                             <component :is="item.exists ? NuxtLink : 'div'"
                                 :to="item.exists ? { name: item.slug } : undefined" :class="[
-                                    'flex items-center gap-2 px-3 py-2 shadow-none transition-all duration-200 rounded-md',
+                                    'flex items-center gap-2 px-3 py-2 shadow-none transition-all duration-200 ',
                                     !item.exists ? 'opacity-50 cursor-not-allowed bg-gray-100/5' : ''
-                                ]" active-class="bg-white/10 text-white font-medium">
+                                ]" active-class="bg-white/10 text-orange-400 font-medium border-r-4 border-orange-400">
                                 <span>{{ item.name }}</span>
 
                                 <span v-if="!item.exists" class="ml-auto text-[10px] bg-red-500 px-1 rounded">404</span>
@@ -72,9 +72,10 @@ onClickOutside(sidebarRef, () => {
                                 <template v-for="child in item.children" :key="child.slug">
                                     <component :is="child.exists ? NuxtLink : 'div'"
                                         :to="child.exists ? { name: child.slug } : undefined" :class="[
-                                            'flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all duration-200 text-sm',
+                                            'flex items-center gap-2 px-2 py-1.5 transition-all duration-200 text-sm',
                                             !child.exists ? 'opacity-50 cursor-not-allowed' : 'text-gray-300 hover:text-white hover:bg-white/5'
-                                        ]" active-class="bg-white/10 text-white !text-white font-medium shadow-sm">
+                                        ]"
+                                        active-class="bg-white/10 text-orange-400 font-medium border-r-4 border-orange-400 ">
                                         <Icon :name="child.icon" size="18" />
                                         <span>{{ child.name }}</span>
                                         <span v-if="!child.exists"

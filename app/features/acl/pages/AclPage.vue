@@ -16,6 +16,7 @@ await fetchModules()
 <template>
 
   <div class="space-y-10">
+    <HeaderPage />
     <div class="space-y-1 sticky top-5 backdrop-blur-lg">
       <UiBreadcrumb :items="[{ label: 'Permission Management' }]" />
 
