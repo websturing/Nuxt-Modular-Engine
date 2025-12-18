@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     const publicRoutes = [
         '/api/auth/login',
         '/api/auth/register',
+        '/api/_nuxt_icon', // ✅ Nuxt Icon internal API
         // '/api/public/something'
     ];
 

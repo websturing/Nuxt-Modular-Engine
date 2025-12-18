@@ -111,14 +111,14 @@ export default defineNuxtConfig({
                 const fileNameOriginal = file.replace('.vue', '')
 
                 // Hapus kata "Page" di akhir nama file (misal: StockInPage -> StockIn)
-                const cleanName = fileNameOriginal.replace(/Pages?$/i, '').toLowerCase()
+                const cleanName = fileNameOriginal.replace(/Page$/i, '').toLowerCase()
 
                 // Logic Penentuan URL dan Route Name
                 let routePath = `/${featureName}` // Default: /stock-in
                 let routeName = featureName       // Default Name: stock-in
 
-                // Jika file BUKAN 'index.vue', tambahkan sebagai sub-path
-                if (cleanName !== 'index' && cleanName !== '') {
+                // Jika file BUKAN 'index.vue' DAN bukan nama feature (misal map LoginPage -> /login bukan /login/login)
+                if (cleanName !== 'index' && cleanName !== '' && cleanName !== featureName.toLowerCase()) {
                   routePath += `/${cleanName}`        // Hasil: /stock-in/create
                   routeName += `-${cleanName}`        // Hasil: stock-in-create
                 }

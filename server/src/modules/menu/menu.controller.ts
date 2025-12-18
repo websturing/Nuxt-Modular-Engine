@@ -8,8 +8,6 @@ export const getMyMenuController = defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, message: 'Unauthorized' });
     }
 
-
-
     const menu = await getStructuredMenuForUserService(user.id);
 
     return menu;
