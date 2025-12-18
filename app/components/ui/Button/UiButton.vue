@@ -15,6 +15,7 @@ interface Props {
     iconPos?: 'left' | 'right'
     iconClass?: string
     customClass?: string
+    label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -87,7 +88,9 @@ const buttonClasses = computed(() => [
         </svg>
 
         <Icon v-if="icon && iconPos === 'left' && !loading" :name="icon" :class="iconSizeClasses" />
-        <slot />
+        <slot>
+            {{ label }}
+        </slot>
         <Icon v-if="icon && iconPos === 'right' && !loading" :name="icon" :class="iconSizeClasses" />
     </button>
 </template>

@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <div class="p-4 border border-dashed border-gray-300 rounded-lg">
-    <h3 class="font-bold text-lg">Acl Container</h3>
-    <p class="text-gray-500">Component ini ada di app/features/acl/components</p>
+  <div class="">
+    <h3 class="font-bold text-lg">ACL Kontent</h3>
+    <p class="text-gray-500">isi content</p>
   </div>
 </template>

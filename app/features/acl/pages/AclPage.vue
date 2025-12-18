@@ -1,14 +1,25 @@
 <script setup lang="ts">
-// Page: /acl
+definePageMeta({
+  layout: 'admin'
+})
+
+useSeoMeta({
+  title: 'Permission Management'
+})
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="space-y-2">
+    <UiBreadcrumb :items="[{ label: 'Permission Management' }]" />
+
     <div class="flex items-center justify-between">
-        <h1 class="text-2xl font-bold text-gray-800">Acl Feature</h1>
-        <UiButton label="Action" />
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">Permission Management</h1>
+        <p>Define and manage user roles, granular access levels, and organizational security policies efficiently</p>
+      </div>
+      <UiButton icon="heroicons:plus" label="Add Role" />
     </div>
-    
+
     <AclContainer />
   </div>
 </template>
