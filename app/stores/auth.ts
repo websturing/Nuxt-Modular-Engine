@@ -68,8 +68,13 @@ export const useAuthStore = defineStore('auth', () => {
             permissions.value = [];
             menus.value = [];
 
-            const router = useRouter();
-            router.push('/login');
+            // 4. Force Reload untuk membersihkan state global
+            if (process.client) {
+                window.location.href = '/login';
+            } else {
+                const router = useRouter();
+                router.push('/login');
+            }
         }
     }
 
