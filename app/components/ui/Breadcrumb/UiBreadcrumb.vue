@@ -54,12 +54,12 @@ const breadcrumbs = computed(() => {
 </script>
 
 <template>
-    <nav class="flex " aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-1 rtl:space-x-reverse opacity-80">
             <!-- Home Item -->
             <li class="inline-flex items-center">
                 <NuxtLink to="/"
-                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+                    class="inline-flex items-center text-xs font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white transition-colors">
                     <Icon name="heroicons:home" class="w-4 h-4 me-2.5" />
                     {{ homeLabel }}
                 </NuxtLink>
@@ -68,15 +68,15 @@ const breadcrumbs = computed(() => {
             <!-- Dynamic Items -->
             <li v-for="(crumb, index) in breadcrumbs" :key="index">
                 <div class="flex items-center">
-                    <Icon :name="separatorIcon" class="rtl:rotate-180 w-5 h-5 text-gray-400 mx-1" />
+                    <Icon :name="separatorIcon" class="rtl:rotate-180 w-5 h-5 text-gray-400" />
 
                     <span v-if="!crumb.to"
-                        class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400 cursor-default">
+                        class="text-xs font-medium text-gray-500 md:ms-2 dark:text-gray-400 cursor-default">
                         {{ crumb.label }}
                     </span>
 
                     <NuxtLink v-else :to="crumb.to"
-                        class="ms-1 text-sm font-medium text-gray-700 hover:text-primary-600 md:ms-2 dark:text-gray-400 dark:hover:text-white transition-colors">
+                        class=" text-xs font-medium text-gray-700 hover:text-primary-600 md:ms-2 dark:text-gray-400 dark:hover:text-white transition-colors">
                         {{ crumb.label }}
                     </NuxtLink>
                 </div>
