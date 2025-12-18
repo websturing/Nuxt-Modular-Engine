@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     '@schema': fileURLToPath(new URL('./server/db/schemas', import.meta.url)),
     '@module': fileURLToPath(new URL('./server/src/modules', import.meta.url)),
     '@shared': fileURLToPath(new URL('./shared', import.meta.url)),
+    '@server': fileURLToPath(new URL('./server', import.meta.url)),
   },
   // ========================================
   // 🎨 CSS & STYLING
