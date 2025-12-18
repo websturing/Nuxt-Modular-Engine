@@ -1,4 +1,4 @@
-import { getUserPermissionsRepo } from '../auth/acl.repository';
+import { getUserPermissionsRepo } from '../acl/acl.repository';
 import { getAllModulesWithPermissionsRepo } from './menu.repository';
 // Tipe Data untuk hasil Menu
 interface MenuNode {

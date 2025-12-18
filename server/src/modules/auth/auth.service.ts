@@ -2,8 +2,8 @@ import type { LoginInput } from '@shared/schemas/auth';
 import { compare } from 'bcryptjs';
 import { generateSanctumToken, hashToken } from '../../../utils/sanctum';
 import { getUserByEmailRepo, getUserByIdRepo } from '../../modules/users/user.repository';
+import { getUserPermissionsRepo, getUserRolesRepo } from '../acl/acl.repository';
 import { getStructuredMenuForUserService } from '../menu/menu.service';
-import { getUserPermissionsRepo, getUserRolesRepo } from './acl.repository';
 import { createSanctumTokenRepo, findSanctumTokenRepo } from './auth.repository';
 export const loginService = async (input: LoginInput) => {
     // 1. Cek User & Password (Sama kayak sebelumnya)

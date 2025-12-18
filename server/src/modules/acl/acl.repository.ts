@@ -1,6 +1,7 @@
 import { db } from '@db';
 import { modelHasRoles, permissions, roleHasPermissions, roles } from '@db/migrations/schema';
-import { and, eq } from 'drizzle-orm';
+import { modules } from '@schema/modules/schema';
+import { and, count, desc, eq } from 'drizzle-orm';
 
 // Ambil semua Permission milik User (via Role)
 export const getUserPermissionsRepo = async (userId: number) => {
@@ -44,3 +45,24 @@ export const getUserRolesRepo = async (userId: number) => {
 
     return result.map(r => r.roleName);
 };
+
+
+export const moduleRepository = {
+    async findMany(params: { skip: number; take: number }) {
+        return await db.select()
+            .from(modules)
+            .limit(params.take)   // Drizzle pakai limit
+            .offset(params.skip)  // Drizzle pakai offset
+            .orderBy(desc(modules.createdAt)) // Import 'desc'
+    },
+
+    // 2. Hitung Total Data
+    async count() {
+        // Drizzle tidak punya .count() langsung, harus select count
+        const [result] = await db
+            .select({ value: count() })
+            .from(modules)
+
+        return result.value // Mengembalikan number
+    }
+}
