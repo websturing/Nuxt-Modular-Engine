@@ -16,7 +16,7 @@ await fetchModules()
 </script>
 
 <template>
-  <div class="space-y-40">
+  <div class="flex flex-col gap-70">
     <UiDatatable :columns="columns" :data="modules" :loading="isLoading">
       <!-- Custom Status Render -->
       <template #cell-is_active="{ value }">
@@ -29,6 +29,6 @@ await fetchModules()
       </template>
     </UiDatatable>
 
-    <UiPagination :meta="meta" />
+    <UiPagination :meta="meta" class="mt-40" />
   </div>
 </template>
