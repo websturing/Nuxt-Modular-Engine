@@ -11,16 +11,22 @@ const model = computed({
 </script>
 
 <template>
-    <div class="flex items-center justify-between pb-4">
-        <div class="flex items-center gap-2">
-            <slot name="start" />
-        </div>
-
+    <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
             <div class="relative w-64">
-                <UiInput v-model="model" placeholder="Search..." leading-icon="heroicons:magnifying-glass" size="sm" />
+                <UiInput v-model="model" placeholder="Search..." leading-icon="heroicons:magnifying-glass" size="sm">
+                    <template #suffix v-if="model">
+                        <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                            @click="model = ''">
+                            <Icon name="solar:close-circle-broken" class="h-4 w-4" />
+                        </button>
+                    </template>
+                </UiInput>
             </div>
             <slot name="end" />
+        </div>
+        <div class="flex items-center gap-2">
+            <slot name="start" />
         </div>
     </div>
 </template>
