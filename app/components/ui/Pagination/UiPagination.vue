@@ -61,7 +61,7 @@
 
                 <template v-for="(page, index) in items">
                     <PaginationListItem v-if="page.type === 'page'" :key="index" :value="page.value"
-                        class="w-8 h-8 flex items-center justify-center rounded-md border text-sm font-medium transition-colors data-[selected]:bg-primary-100 data-[selected]:text-white data-[selected]:border-primary-600 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 focus:shadow focus:ring-1 focus:ring-primary-500 focus:outline-none">
+                        class="w-8 h-8 flex items-center justify-center rounded-md border text-sm font-medium transition-colors data-[selected]:bg-primary-500 data-[selected]:text-white-50 data-[selected]:border-primary-600 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 focus:shadow focus:ring-1 focus:ring-primary-500 focus:outline-none">
                         {{ page.value }}
                     </PaginationListItem>
 

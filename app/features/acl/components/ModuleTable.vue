@@ -8,27 +8,55 @@ const columns = [
   { key: 'actions', label: '', width: '50px' }
 ] as HelperColumn[]
 
-const isLoading = ref(false)
-
 const { modules, meta, fetchModules } = useAcl()
+const isLoading = ref(false)
+const page = ref(1)
 
-await fetchModules()
+// Selection State
+const selectedModules = ref<string[]>([])
+
+
+// Wrapper untuk fetch data dengan loading state & params
+const loadData = async () => {
+  isLoading.value = true
+  try {
+    // Pass params page ke function fetch
+    await fetchModules({ page: page.value })
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Trigger fetch ulang saat page berubah
+watch(page, () => {
+  loadData()
+})
+
+// Initial load
+await loadData()
 </script>
 
 <template>
-  <div class="space-y-5">
-    <UiDatatable :columns="columns" :data="modules" :loading="isLoading">
+  <div class="space-y-4">
+    <UiDatatable show-index :columns="columns" :data="modules" :loading="isLoading" keyField="name">
       <!-- Custom Status Render -->
       <template #cell-is_active="{ value }">
-        <span class="badge">{{ value ? 'Active' : 'Inactive' }}</span>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
+          :class="value ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'">
+          {{ value ? 'active' : 'inactive' }}
+        </span>
       </template>
 
       <!-- Actions -->
       <template #cell-actions="{ row }">
-        <UiButton size="sm" icon="heroicons:pencil-square" />
+        <div class="flex justify-end">
+          <UiButton size="sm" variant="ghost" icon="heroicons:pencil-square" />
+        </div>
       </template>
     </UiDatatable>
 
-    <UiPagination :meta="meta" class="mt-40" />
+    <div v-if="meta" class="flex justify-end pt-4">
+      <UiPagination :meta="meta" v-model:page="page" />
+    </div>
   </div>
 </template>
