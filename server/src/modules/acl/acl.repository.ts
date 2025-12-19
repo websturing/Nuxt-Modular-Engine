@@ -1,7 +1,7 @@
 import { db } from '@db';
 import { modelHasRoles, permissions, roleHasPermissions, roles } from '@db/migrations/schema';
 import { modules } from '@schema/modules/schema';
-import { and, count, desc, eq } from 'drizzle-orm';
+import { and, count, eq } from 'drizzle-orm';
 
 // Ambil semua Permission milik User (via Role)
 export const getUserPermissionsRepo = async (userId: number) => {
@@ -49,11 +49,15 @@ export const getUserRolesRepo = async (userId: number) => {
 
 export const moduleRepository = {
     async findMany(params: { offset: number; limit: number }) {
-        return await db.select()
-            .from(modules)
-            .limit(params.limit)
-            .offset(params.offset)
-            .orderBy(desc(modules.createdAt))
+        return await db.query.modules.findMany({
+            limit: params.limit,
+            offset: params.offset,
+            orderBy: (modules, { asc }) => [asc(modules.name)],
+            with: {
+                parent: true,
+                children: true
+            }
+        })
     },
 
 
