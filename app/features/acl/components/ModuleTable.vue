@@ -4,6 +4,7 @@ import type { HelperColumn } from '~/components/ui/Datatable/UiDatatable.vue';
 const columns = [
   { key: 'name', label: 'Module Name' },
   { key: 'slug', label: 'Slug' },
+  { key: 'parent.name', label: 'Parent' },
   { key: 'is_active', label: 'Status', align: 'center' },
   { key: 'actions', label: '', width: '50px' }
 ] as HelperColumn[]
@@ -12,9 +13,7 @@ const { modules, meta, fetchModules } = useAcl()
 const isLoading = ref(false)
 const page = ref(1)
 
-// Selection State
-const selectedModules = ref<string[]>([])
-
+const { searchQuery, data: tableData } = useDatatable(modules, fetchModules)
 
 // Wrapper untuk fetch data dengan loading state & params
 const loadData = async () => {
@@ -38,7 +37,9 @@ await loadData()
 
 <template>
   <div class="space-y-4">
-    <UiDatatable show-index :columns="columns" :data="modules" :loading="isLoading" keyField="name">
+    <UiDatatableToolbar v-model="searchQuery" />
+    <UiDatatable show-index :page="page" :per-page="meta?.perPage" :columns="columns" :data="tableData"
+      :loading="isLoading" keyField="name">
       <!-- Custom Status Render -->
       <template #cell-is_active="{ value }">
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"

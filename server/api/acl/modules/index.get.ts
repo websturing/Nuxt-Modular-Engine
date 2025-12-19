@@ -9,9 +9,9 @@ export default defineApiHandler(async (event) => {
 
     const page = Number(query.page) || 1
     const perPage = Number(query.perPage) || 10
+    const search = query.search || ''
 
-
-    const result = await aclModuleService.getList(page, perPage)
+    const result = await aclModuleService.getList(page, perPage, search)
 
     return {
         success: true,

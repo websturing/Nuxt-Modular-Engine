@@ -23,6 +23,8 @@ interface Props {
     selectable?: boolean
     modelValue?: any[]
     showIndex?: boolean
+    page?: number
+    perPage?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -33,7 +35,9 @@ const props = withDefaults(defineProps<Props>(), {
     skeletonRows: 5,
     selectable: false,
     modelValue: () => [],
-    showIndex: false
+    showIndex: false,
+    page: 1,
+    perPage: 10
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -73,6 +77,11 @@ const toggleAll = (e: Event) => {
         const currentKeys = props.data.map(row => row[props.keyField])
         selected.value = selected.value.filter(key => !currentKeys.includes(key))
     }
+}
+
+const getValue = (obj: any, path: string) => {
+    if (!obj || !path) return undefined
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
 }
 
 const alignmentClass = (align?: string) => {
@@ -164,7 +173,7 @@ const alignmentClass = (align?: string) => {
 
                             <!-- Index Cell -->
                             <td v-if="showIndex" class="px-4 py-2 text-center text-gray-500 text-xs">
-                                {{ rowIndex + 1 }}
+                                {{ (page - 1) * perPage + rowIndex + 1 }}
                             </td>
 
                             <td v-for="col in columns" :key="col.key" :class="[
@@ -173,8 +182,9 @@ const alignmentClass = (align?: string) => {
                                 col.class
                             ]">
                                 <!-- Dynamic Slot for Cells: cell-{key} -->
-                                <slot :name="`cell-${col.key}`" :row="row" :index="rowIndex" :value="row[col.key]">
-                                    {{ row[col.key] }}
+                                <slot :name="`cell-${col.key}`" :row="row" :index="rowIndex"
+                                    :value="getValue(row, col.key)">
+                                    {{ getValue(row, col.key) ?? '-' }}
                                 </slot>
                             </td>
                         </tr>

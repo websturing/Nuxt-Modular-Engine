@@ -8,15 +8,15 @@ export const aclModuleService = {
      * Mengambil daftar module dengan pagination.
      * Aman untuk Public API karena input divalidasi.
      */
-    async getList(page: number = 1, perPage: number = 10): Promise<PaginatedResult<any>> {
+    async getList(page: number = 1, perPage: number = 10, search?: string): Promise<PaginatedResult<any>> {
 
         const safePage = Math.max(1, page)
         const safePerPage = Math.max(1, Math.min(MAX_PER_PAGE, perPage))
         const offset = (safePage - 1) * safePerPage
 
         const [data, total] = await Promise.all([
-            moduleRepository.findMany({ offset, limit: safePerPage }),
-            moduleRepository.count()
+            moduleRepository.findMany({ offset, limit: safePerPage, search }),
+            moduleRepository.count({ search })
         ])
 
         const lastPage = Math.ceil(total / safePerPage)

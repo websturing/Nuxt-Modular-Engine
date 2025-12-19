@@ -5,10 +5,10 @@ export const useAcl = () => {
     const meta = ref<PaginationMeta>()
 
     const fetchModules = async (params: any = {}) => {
-        const { data } = await useApi<any>('/acl/modules', { params })
-        if (data.value) {
-            modules.value = data.value.data
-            meta.value = data.value.meta
+        const response = await $api<any>('/acl/modules', { params })
+        if (response) {
+            modules.value = response.data
+            meta.value = response.meta
         }
     }
 

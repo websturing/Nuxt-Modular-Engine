@@ -1,7 +1,7 @@
 import { db } from '@db';
 import { modelHasRoles, permissions, roleHasPermissions, roles } from '@db/migrations/schema';
 import { modules } from '@schema/modules/schema';
-import { and, count, eq } from 'drizzle-orm';
+import { aliasedTable, and, count, eq, inArray, like, or } from 'drizzle-orm';
 
 // Ambil semua Permission milik User (via Role)
 export const getUserPermissionsRepo = async (userId: number) => {
@@ -48,11 +48,28 @@ export const getUserRolesRepo = async (userId: number) => {
 
 
 export const moduleRepository = {
-    async findMany(params: { offset: number; limit: number }) {
+    async findMany(params: { offset: number; limit: number, search?: string }) {
+        const parents = aliasedTable(modules, 'parents')
+
         return await db.query.modules.findMany({
             limit: params.limit,
             offset: params.offset,
             orderBy: (modules, { asc }) => [asc(modules.name)],
+            where: (modules, { like, or }) => {
+                if (params.search) {
+                    return or(
+                        like(modules.name, `%${params.search}%`),
+                        like(modules.slug, `%${params.search}%`),
+                        // Search by Parent Name
+                        inArray(
+                            modules.parentId,
+                            db.select({ id: parents.id })
+                                .from(parents)
+                                .where(like(parents.name, `%${params.search}%`))
+                        )
+                    )
+                }
+            },
             with: {
                 parent: true,
                 children: true
@@ -61,10 +78,27 @@ export const moduleRepository = {
     },
 
 
-    async count() {
-        const [result] = await db
+    async count(params: { search?: string } = {}) {
+        const parents = aliasedTable(modules, 'parents')
+        const query = db
             .select({ value: count() })
             .from(modules)
+
+        if (params.search) {
+            query.where(or(
+                like(modules.name, `%${params.search}%`),
+                like(modules.slug, `%${params.search}%`),
+                // Search by Parent Name
+                inArray(
+                    modules.parentId,
+                    db.select({ id: parents.id })
+                        .from(parents)
+                        .where(like(parents.name, `%${params.search}%`))
+                )
+            ))
+        }
+
+        const [result] = await query
 
         return result?.value || 0
     }
